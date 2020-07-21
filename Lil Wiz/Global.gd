@@ -1,5 +1,9 @@
 extends Node
 
+# enums ========================================================================
+	# enum que define categoria dos objetos
+enum {PLAYER, ENEMY, PICKUP, TRIGGERABLE}
+
 # Variávels globais ============================================================
 const SCENES_PATH 		= "res://Scenes/" 
 const ASSETS_PATH 		= "res://Assets/"

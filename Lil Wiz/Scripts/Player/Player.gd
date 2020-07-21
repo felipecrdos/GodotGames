@@ -80,14 +80,17 @@ func jumping_state(delta):
 	if can_jump:
 		velocity.y = -jump_force
 		can_jump = false
-	if is_on_floor():
-		state = State.IDLE
-		is_jumping = false
+	if velocity.y > 0:
+		state = State.FALLING
 		
 func falling_state(delta):
-	pass
+	if is_on_floor():
+		state = State.LANDING
+		is_jumping = false
+
 func landing_state(delta):
-	pass
+	state = State.IDLE
+	
 func hitting_state(delta):
 	pass
 func dying_state(delta):

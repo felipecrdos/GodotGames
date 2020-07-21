@@ -18,40 +18,78 @@ onready var ground_map = $MapsContainer/Ground
 
 # Cenas dos objetos que serão instanciados na cena
 export (PackedScene) var player
+export (PackedScene) var enemy
 #export (PackedScene) var coin
 #export (PackedScene) var key
 #export (PackedScene) var chest
 
-# Index do tile que representa os objetos
-# a serem instanciados
-var player_index : int
-var coin_index : int
+# Array que mapeira os objetos dentro de cada tilemap.
+onready var objects_maps = {actors_map16:[{"type":Global.PLAYER, "name":"Player","index":-1,"packed":player, "offset":Vector2.ZERO}, 
+										  {"type":Global.ENEMY, "name":"Enemy","index":-1,"packed":enemy, "offset":Vector2.ZERO}],
+							actors_map32:[{"type":Global.PLAYER,"name":"Player","index":-1,"packed":player, "offset":Vector2.ZERO}, 
+										  {"type":Global.ENEMY, "name":"Enemy","index":-1,"packed":enemy, "offset":Vector2.ZERO}],
+							actors_map64:[{"type":Global.PLAYER,"name":"Player","index":-1,"packed":player, "offset":Vector2.ZERO}, 
+										  {"type":Global.ENEMY, "name":"Enemy","index":-1,"packed":enemy, "offset":Vector2.ZERO}]}
 
+	
+	
 func _ready():
 	find_index()
-	#setup_level()
+	setup_level()
 
+# Achar os índeces dos objetos contidos
+# no array "objects_maps".
 func find_index():
-	for map in map_container.get_children():
+	for map in objects_maps:
 		if map.tile_set:
-			player_index = map.tile_set.find_tile_by_name("Player")
-			coin_index = map.tile_set.find_tile_by_name("Coin")
+			for obj in objects_maps[map]:
+				var index = map.tile_set.find_tile_by_name(obj["name"])
+				if index != -1:
+					obj["index"] = index
 	
+# Os objetos serão instanciados de acordo com os 
+# índices encontrados nos TileMaps.
 func setup_level():
-	for cell in actors_map32.get_used_cells():
-		match actors_map32.get_cellv(cell):
-			player_index:
-				map_to_world_instance(player, cell, player_container, Vector2.ZERO)
-#			coin_index:
-#				map_to_world_instance(coin, cell, player_container, Vector2.ZERO)
+	for map in objects_maps:
+		if map.tile_set:
+			for coord in map.get_used_cells():
+				var index = map.get_cellv(coord)
+				if index != -1:
+					for obj in objects_maps[map]:
+						if index == obj["index"]:
+							var pos = map.map_to_world(coord)
+							remove_cell(map, coord)
+							create_object(pos, obj["packed"], obj["type"], obj["offset"])
+							pass
+						
+# Criar (Instanciar) os objetos de acordo com os índices
+# encontrado nos TileMaps e adicionalos a um container
+# correspondente de acordo com o tipo do objeto.
+func create_object(pos, packed, type, offset):		
+	var object = packed.instance()
+	object.global_position = pos
+	match type:
+		Global.PLAYER:
+			player_container.add_child(object)
+		Global.ENEMY:
+			enemies_container.add_child(object)
+		Global.PICKUP:
+			pickups_container.add_child(object)
+		Global.TRIGGERABLE:
+			player_container.add_child(object)
 
-func map_to_world_instance(packed, coord, parent, offset):
-	var instance = packed.instance()
-	var pos = actors_map32.map_to_world(coord)
-	remove_cell(actors_map32, coord)
-	instance.global_position = pos
-	parent.add_child(instance)
-
+# Remover a célula que correponde ao objeto instanciado.
 func remove_cell(map, coord):
 	map.set_cellv(coord, -1)
+	pass
+
+# Sinal recebido quando o player toca o portal
+# para mudar de cena
+func on_entered_portal(body, scene):
+	#### TESTE
+	print(get_node("/root/Game/World").name)
+	print("body: ", body.name)
+	print("scene: ", scene)
+	get_node("/root/Game/World").index = 2
+	get_node("/root/Game/World").change_level()
 	pass

@@ -38,11 +38,12 @@ __meta__ = {
 
 [node name="Animated" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
-frame = 2
+frame = 3
 playing = true
 
 [node name="Area" type="Area2D" parent="."]
 collision_layer = 8
+collision_mask = 0
 
 [node name="Shape" type="CollisionShape2D" parent="Area"]
 shape = SubResource( 6 )

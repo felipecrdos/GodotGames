@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://Resources/EnvironmentTile.tres" type="TileSet" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Resources/CharacterTile16.tres" type="TileSet" id=4]
 [ext_resource path="res://Resources/CharacterTile32.tres" type="TileSet" id=5]
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Resources/CharacterTile64.tres" type="TileSet" id=7]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )
@@ -51,12 +52,10 @@ format = 1
 tile_data = PoolIntArray( 524290, 0, 0 )
 
 [node name="Actors64" type="TileMap" parent="MapsContainer"]
+tile_set = ExtResource( 7 )
 format = 1
 
 [node name="PlayerContainer" type="Node2D" parent="."]
-
-[node name="Player" parent="PlayerContainer" instance=ExtResource( 6 )]
-position = Vector2( 96, 48 )
 
 [node name="EnemiesContainer" type="Node2D" parent="."]
 
@@ -66,4 +65,4 @@ position = Vector2( 96, 48 )
 
 [node name="Portal" parent="TriggerableContainer" instance=ExtResource( 3 )]
 position = Vector2( 256, 128 )
-change_to = "LevelA"
+[connection signal="entered_portal" from="TriggerableContainer/Portal" to="." method="on_entered_portal"]

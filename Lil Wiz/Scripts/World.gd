@@ -4,7 +4,7 @@ onready var transition = get_node("/root/Game/Interface/TrasitionScreen")
 
 var levels : Array = Global.get_files_on_directory(Global.LEVELS_PATH, true)
 var level : Node2D = null
-var index : int = 0
+var index : int = 1
 
 # Signals
 signal change_level(world)

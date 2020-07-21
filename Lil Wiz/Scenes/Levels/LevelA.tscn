@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/Levels/Level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Levels/LevelB.tscn" type="PackedScene" id=2]
 
 [node name="Level" instance=ExtResource( 1 )]
 
@@ -11,4 +12,4 @@ tile_data = PoolIntArray( 589824, 19, 2, 589825, 19, 3, 589826, 19, 3, 589827, 1
 tile_data = PoolIntArray( 524296, 0, 0 )
 
 [node name="Portal" parent="TriggerableContainer" index="0"]
-change_to = "LevelB"
+scene = ExtResource( 2 )
