@@ -1,25 +1,26 @@
 extends Node
 
-onready var transition = get_node("/root/Game/Interface/TrasitionScreen")
+var scene = "res://Scenes/Levels/LevelA.tscn"
+onready var fade = get_node("/root/Game/Interface/FadeScreen")
 
-var levels : Array = Global.get_files_on_directory(Global.LEVELS_PATH, true)
-var level : Node2D = null
-var index : int = 1
-
-# Signals
 signal change_level(world)
-
 func _ready():	
-	change_level()
+	change_level(scene)
 	
-func change_level():
+func change_level(scene):
 	emit_signal("change_level", self)
+	fade.start_fade(0, 1, 1)
+	yield(fade.tween, "tween_completed")
+	load_level(scene)
+	fade.start_fade(1, 0, 1)
 	
-func load_level():
+	
+func load_level(scene):
 	remove_level()
-	level = load(levels[index]).instance()
+	var level = load(scene).instance()
 	call_deferred("add_child", level)
 	
 func remove_level():
 	if has_node("Level"):
-		get_node("Level").queue_free()
+		get_node("Level").call_deferred("free")
+		pass

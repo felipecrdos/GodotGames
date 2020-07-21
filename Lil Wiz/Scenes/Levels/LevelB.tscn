@@ -12,4 +12,4 @@ tile_data = PoolIntArray( 524305, 0, 0 )
 
 [node name="Portal" parent="TriggerableContainer" index="0"]
 position = Vector2( 192, 128 )
-change_to = "LevelC"
+scene = "res://Scenes/Levels/LevelC.tscn"

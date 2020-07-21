@@ -60,4 +60,5 @@ ui_right={
 [rendering]
 
 quality/2d/use_pixel_snap=true
+environment/default_clear_color=Color( 0.27451, 0.643137, 0.968627, 1 )
 environment/default_environment="res://default_env.tres"

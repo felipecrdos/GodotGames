@@ -29,10 +29,7 @@ onready var objects_maps = {actors_map16:[{"type":Global.PLAYER, "name":"Player"
 							actors_map32:[{"type":Global.PLAYER,"name":"Player","index":-1,"packed":player, "offset":Vector2.ZERO}, 
 										  {"type":Global.ENEMY, "name":"Enemy","index":-1,"packed":enemy, "offset":Vector2.ZERO}],
 							actors_map64:[{"type":Global.PLAYER,"name":"Player","index":-1,"packed":player, "offset":Vector2.ZERO}, 
-										  {"type":Global.ENEMY, "name":"Enemy","index":-1,"packed":enemy, "offset":Vector2.ZERO}]}
-
-	
-	
+										  {"type":Global.ENEMY, "name":"Enemy","index":-1,"packed":enemy, "offset":Vector2.ZERO}]}	
 func _ready():
 	find_index()
 	setup_level()
@@ -86,10 +83,7 @@ func remove_cell(map, coord):
 # Sinal recebido quando o player toca o portal
 # para mudar de cena
 func on_entered_portal(body, scene):
-	#### TESTE
-	print(get_node("/root/Game/World").name)
-	print("body: ", body.name)
-	print("scene: ", scene)
-	get_node("/root/Game/World").index = 2
-	get_node("/root/Game/World").change_level()
-	pass
+	var parent = get_parent()
+	if parent && parent.has_method("change_level"):
+		parent.scene = scene
+		parent.change_level()

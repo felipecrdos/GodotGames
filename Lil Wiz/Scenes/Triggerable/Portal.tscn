@@ -38,7 +38,7 @@ __meta__ = {
 
 [node name="Animated" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
-frame = 3
+frame = 1
 playing = true
 
 [node name="Area" type="Area2D" parent="."]
