@@ -47,6 +47,7 @@ margin_bottom = 107.0
 text = "MENU"
 
 [node name="MenuScreen" type="Node2D" parent="Interface"]
+z_index = -1
 script = ExtResource( 6 )
 
 [node name="StartButton" parent="Interface/MenuScreen" instance=ExtResource( 7 )]
@@ -55,13 +56,16 @@ margin_top = 77.0
 margin_right = 179.0
 margin_bottom = 97.0
 text = "START"
-scene = "res://Scenes/Levels/LevelA.tscn"
+file = "res://Scenes/Levels/LevelA.tscn"
 
 [node name="World" type="Node2D" parent="."]
 script = ExtResource( 2 )
 
 [node name="Sound" type="Node2D" parent="."]
 script = ExtResource( 4 )
-[connection signal="custom_pressed" from="Interface/PauseScreen/MenuButton" to="." method="on_menu_button_pressed"]
+[connection signal="custom_pressed" from="Interface/PauseScreen/ResumeButton" to="World" method="on_resume_button_pressed"]
+[connection signal="custom_pressed" from="Interface/PauseScreen/MenuButton" to="World" method="on_menu_button_pressed"]
 [connection signal="custom_pressed" from="Interface/MenuScreen/StartButton" to="World" method="on_start_button_pressed"]
 [connection signal="change_level" from="World" to="." method="on_world_change_level"]
+[connection signal="goto_menu" from="World" to="." method="on_world_goto_menu"]
+[connection signal="resume_level" from="World" to="." method="on_world_resume_level"]

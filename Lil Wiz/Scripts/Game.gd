@@ -28,6 +28,9 @@ func fade_in(start_value, end_value, time):
 
 func fade_out(start_value, end_value, time):
 	find("FadeScreen").start_fade(1, 0, 2)
+
+func set_paused(value : bool):
+	get_tree().paused = value
 	
 # Sinal recebido pelo nó World quando
 # quando um sinal de troca de level é enviado.
@@ -37,13 +40,22 @@ func on_world_change_level(level):
 	Data.save_level()
 
 	set_visible({"MenuScreen":false})
-
+	set_paused(false)
+	
 	fade_in(0, 1, 1)
 	find("World").change_level(level)
 	fade_out(1, 0, 1)
 	
 	Data.load_player()
 
-func on_menu_button_pressed(scene):
+func on_world_goto_menu(scene):
+	set_visible({"PauseScreen":false})
+	fade_in(0, 1, 1)
 	find("World").remove_level()
-	pass 
+	fade_out(1, 0, 1)
+	set_visible({"MenuScreen":true})
+
+func on_world_resume_level(file):
+	set_paused(false)
+	set_visible({"PauseScreen":false})
+	

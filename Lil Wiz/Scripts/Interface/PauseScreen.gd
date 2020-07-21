@@ -8,5 +8,5 @@ func _ready():
 func _input(event):
 	if event is InputEventKey:
 		if Input.is_key_pressed(KEY_P):
-			get_tree().paused = !get_tree().paused
+			get_tree().paused = true
 			visible = get_tree().paused
