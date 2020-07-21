@@ -84,5 +84,5 @@ func remove_cell(map, coord):
 # para mudar de cena
 func on_entered_portal(body, scene):
 	var parent = get_parent()
-	if parent && parent.has_method("change_level"):
-		parent.change_level(scene)
+	if parent && parent.has_signal("change_level"):
+		parent.emit_signal("change_level", scene)

@@ -1,20 +1,25 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/World.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Interface/FadeScreen.gd" type="Script" id=3]
-[ext_resource path="res://Scripts/Sounds.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/Sound.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/Interface/PauseScreen.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/Interface/MenuScreen.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/Interface/CustomButton.tscn" type="PackedScene" id=7]
 
 [node name="Game" type="Node"]
 script = ExtResource( 1 )
 
 [node name="Interface" type="Node2D" parent="."]
+pause_mode = 2
 z_index = 100
 
 [node name="FadeScreen" type="Node2D" parent="Interface"]
 script = ExtResource( 3 )
 
 [node name="Fade" type="ColorRect" parent="Interface/FadeScreen"]
+modulate = Color( 1, 1, 1, 0 )
 margin_right = 320.0
 margin_bottom = 180.0
 __meta__ = {
@@ -23,8 +28,35 @@ __meta__ = {
 
 [node name="Tween" type="Tween" parent="Interface/FadeScreen"]
 
+[node name="PauseScreen" type="Node2D" parent="Interface"]
+visible = false
+script = ExtResource( 5 )
+
+[node name="ResumeButton" type="Button" parent="Interface/PauseScreen"]
+margin_left = 138.0
+margin_top = 78.0
+margin_right = 188.0
+margin_bottom = 98.0
+text = "Resume"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuScreen" type="Node2D" parent="Interface"]
+script = ExtResource( 6 )
+
+[node name="StartButton" parent="Interface/MenuScreen" instance=ExtResource( 7 )]
+margin_left = 129.0
+margin_top = 77.0
+margin_right = 179.0
+margin_bottom = 97.0
+text = "START"
+scene = "res://Scenes/Levels/LevelA.tscn"
+
 [node name="World" type="Node" parent="."]
 script = ExtResource( 2 )
 
-[node name="Sounds" type="Node" parent="."]
+[node name="Sound" type="Node" parent="."]
 script = ExtResource( 4 )
+[connection signal="custom_pressed" from="Interface/MenuScreen/StartButton" to="World" method="on_start_button_pressed"]
+[connection signal="change_level" from="World" to="." method="on_world_change_level"]
