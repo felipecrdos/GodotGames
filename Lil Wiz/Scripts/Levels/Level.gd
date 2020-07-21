@@ -85,5 +85,4 @@ func remove_cell(map, coord):
 func on_entered_portal(body, scene):
 	var parent = get_parent()
 	if parent && parent.has_method("change_level"):
-		parent.scene = scene
-		parent.change_level()
+		parent.change_level(scene)

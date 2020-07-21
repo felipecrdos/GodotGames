@@ -9,6 +9,7 @@
 script = ExtResource( 1 )
 
 [node name="Interface" type="Node2D" parent="."]
+z_index = 100
 
 [node name="FadeScreen" type="Node2D" parent="Interface"]
 script = ExtResource( 3 )
