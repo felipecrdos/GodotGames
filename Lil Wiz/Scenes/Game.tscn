@@ -32,15 +32,19 @@ __meta__ = {
 visible = false
 script = ExtResource( 5 )
 
-[node name="ResumeButton" type="Button" parent="Interface/PauseScreen"]
-margin_left = 138.0
-margin_top = 78.0
-margin_right = 188.0
-margin_bottom = 98.0
-text = "Resume"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="ResumeButton" parent="Interface/PauseScreen" instance=ExtResource( 7 )]
+margin_left = 136.0
+margin_top = 49.0
+margin_right = 211.0
+margin_bottom = 69.0
+text = "RESUME"
+
+[node name="MenuButton" parent="Interface/PauseScreen" instance=ExtResource( 7 )]
+margin_left = 152.0
+margin_top = 87.0
+margin_right = 203.0
+margin_bottom = 107.0
+text = "MENU"
 
 [node name="MenuScreen" type="Node2D" parent="Interface"]
 script = ExtResource( 6 )
@@ -53,10 +57,11 @@ margin_bottom = 97.0
 text = "START"
 scene = "res://Scenes/Levels/LevelA.tscn"
 
-[node name="World" type="Node" parent="."]
+[node name="World" type="Node2D" parent="."]
 script = ExtResource( 2 )
 
-[node name="Sound" type="Node" parent="."]
+[node name="Sound" type="Node2D" parent="."]
 script = ExtResource( 4 )
+[connection signal="custom_pressed" from="Interface/PauseScreen/MenuButton" to="." method="on_menu_button_pressed"]
 [connection signal="custom_pressed" from="Interface/MenuScreen/StartButton" to="World" method="on_start_button_pressed"]
 [connection signal="change_level" from="World" to="." method="on_world_change_level"]

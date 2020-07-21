@@ -23,7 +23,7 @@ var state = State.RUNNING
 
 var velocity = Vector2.ZERO
 var direction = Vector2(0, 1)
-var speed = Vector2(100, 800)
+var speed = Vector2(100, 1000)
 
 var jump_force 	: float = 300
 var can_jump 	: bool = false
