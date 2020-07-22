@@ -1,14 +1,16 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://script/Level.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Pause.tscn" type="PackedScene" id=2]
 [ext_resource path="res://resouce/EnvironmentTileset.tres" type="TileSet" id=3]
 [ext_resource path="res://resouce/CharTileset32.tres" type="TileSet" id=4]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=5]
 
 [sub_resource type="TileSet" id=1]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )
+player_packedscene = ExtResource( 5 )
 
 [node name="Environment" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
@@ -24,7 +26,7 @@ format = 1
 tile_set = ExtResource( 4 )
 cell_size = Vector2( 32, 32 )
 format = 1
-tile_data = PoolIntArray( 262145, 0, 0 )
+tile_data = PoolIntArray( 1, 0, 0 )
 
 [node name="Actor64" type="TileMap" parent="."]
 format = 1

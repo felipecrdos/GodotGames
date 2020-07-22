@@ -1,8 +1,8 @@
 extends Node2D
 
 export (PackedScene) var player_packedscene
-export (PackedScene) var coin_scene
-export (PackedScene) var chest_scene
+export (PackedScene) var coin_packedscene
+export (PackedScene) var chest_packedscene
 
 var actor_container
 var pickup_container
@@ -53,9 +53,9 @@ func find_corresponding_cells():
 
 func instantiate_objects(g_position, packedscene, parent, offset):
 	var new_object = packedscene.instance()
+	parent.add_child(new_object)
 	new_object.global_position = g_position
 	new_object.global_position += offset
-	parent.call_deferred("add_child", new_object)
 
 func remove_cell(map, coord):
 	map.set_cellv(coord, -1)
