@@ -1,6 +1,7 @@
 extends Node2D
 
 export (PackedScene) var player_packedscene
+export (PackedScene) var portal_packedscene
 export (PackedScene) var coin_packedscene
 export (PackedScene) var chest_packedscene
 
@@ -17,10 +18,10 @@ func _ready():
 	actor_container 		= $ActorsContainer
 	pickup_container 		= $PickupContainer
 	triggerable_container	= $TriggerableContainer
-
-	map_actor16 = $Actor16
-	map_actor32 = $Actor32
-	map_actor64 = $Actor64
+	
+	map_actor16 	= $ActorMap16
+	map_actor32 	= $ActorMap32
+	map_actor64 	= $ActorMap64
 	
 	maps_to_actors = {	map_actor16:[	{"type":0, "name":"Player","index":-1, "packed":player_packedscene,"parent":actor_container, "offset":Vector2.ZERO},
 										{"type":1, "name":"Enemy","index":-1, "packed":0,"parent":actor_container, "offset":Vector2.ZERO}],
