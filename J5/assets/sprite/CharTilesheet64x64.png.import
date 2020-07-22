@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/focus_button.png-a154319cb616038beba351ea1696c1c5.stex"
+path="res://.import/CharTilesheet64x64.png-8932a55e4bceee43817c022f93307353.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprite/focus_button.png"
-dest_files=[ "res://.import/focus_button.png-a154319cb616038beba351ea1696c1c5.stex" ]
+source_file="res://assets/sprite/CharTilesheet64x64.png"
+dest_files=[ "res://.import/CharTilesheet64x64.png-8932a55e4bceee43817c022f93307353.stex" ]
 
 [params]
 

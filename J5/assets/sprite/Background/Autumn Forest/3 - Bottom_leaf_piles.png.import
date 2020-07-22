@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/focus_button.png-a154319cb616038beba351ea1696c1c5.stex"
+path="res://.import/3 - Bottom_leaf_piles.png-026642b613911752eb9895c2899b44b9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprite/focus_button.png"
-dest_files=[ "res://.import/focus_button.png-a154319cb616038beba351ea1696c1c5.stex" ]
+source_file="res://assets/sprite/Background/Autumn Forest/3 - Bottom_leaf_piles.png"
+dest_files=[ "res://.import/3 - Bottom_leaf_piles.png-026642b613911752eb9895c2899b44b9.stex" ]
 
 [params]
 
