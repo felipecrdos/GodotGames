@@ -23,6 +23,8 @@ func _ready():
 					State.DYING		:[true, true, true]}
 
 	state 	= State.IDLE
+	walk_speed = 14
+	run_speed = 22
 	set_funcs_refs()
 	
 func _physics_process(delta):
@@ -38,9 +40,11 @@ func _physics_process(delta):
 func ai():
 	if direction.x > 0:
 		animation.flip_h = false
+		hitbox_area.position.x = abs(hitbox_area.position.x)  
 	if direction.x < 0:
 		animation.flip_h = true
-	
+		hitbox_area.position.x = -abs(hitbox_area.position.x)
+
 func hmove():
 	velocity.x = direction.x * hspeed
 
@@ -75,10 +79,7 @@ func chase_state(delta):
 func attack_state(delta):
 	animation.play("Attacking")
 	direction.x = sign(Global.player.global_position.x - global_position.x)
-	if animation.frame == frame_attack:
-		hitbox_area.monitoring = true
-	else:
-		hitbox_area.monitoring = false
+	Util.enable_monitoring_area_in_frame(hitbox_area, animation, 3)
 	
 func hurt_state(delta):
 	animation.play("Hurt")
@@ -94,16 +95,13 @@ func on_change_state_timeout():
 			var size = states.size()
 			var index = randi()%size
 			state = states[index]
-			direction.x = Global.choose([-1, 1])
-
+			direction.x = Util.choose([-1, 1])
 
 func on_chase_area_body_entered(body):
-	print("chase entered")
 	if state != State.CHASE && state != State.ATTACK:
 		state = State.CHASE
 	
 func on_chase_area_body_exited(body):
-	print("chase exit!!")
 	state = State.IDLE
 
 func on_attack_area_body_entered(body):
@@ -114,4 +112,8 @@ func on_attack_area_body_exited(body):
 	state = State.CHASE
 
 func on_hitbox_body_entered(body):
-	print("hit: ", body.name)
+	print("hiting entered: ", body.name)
+	
+func on_hitbox_body_exited(body):
+	print("hiting exit: ", body.name)
+	hitbox_area.set_deferred("monitoring", false)

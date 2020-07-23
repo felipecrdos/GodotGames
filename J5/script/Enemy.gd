@@ -40,18 +40,3 @@ func set_funcs_refs():
 	for nam in funcs_names:
 		funcs_refs.append(funcref(self, nam))
 
-func on_change_state_timeout():
-	pass
-	
-func on_chase_area_body_entered(body):
-	pass 
-func on_chase_area_body_exited(body):
-	pass 
-
-func on_attack_area_body_entered(body):
-	pass
-func on_attack_area_body_exited(body):
-	pass 
-	
-func on_hitbox_body_entered(body):
-	pass

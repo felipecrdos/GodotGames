@@ -216,6 +216,7 @@ animation = "Running"
 
 [node name="HitBoxArea" type="Area2D" parent="ASprite"]
 position = Vector2( 20, 10 )
+monitoring = false
 collision_layer = 0
 
 [node name="Shape" type="CollisionShape2D" parent="ASprite/HitBoxArea"]
