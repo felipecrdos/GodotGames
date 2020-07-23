@@ -1,6 +1,7 @@
 extends Node2D
 
 export (PackedScene) var player_packedscene
+export (PackedScene) var orc_packedscene
 export (PackedScene) var portal_packedscene
 export (PackedScene) var coin_packedscene
 export (PackedScene) var chest_packedscene
@@ -27,7 +28,7 @@ func _ready():
 										{"type":1, "name":"Enemy","index":-1, "packed":0,"parent":actor_container, "offset":Vector2.ZERO}],
 						map_actor32:[	{"type":0, "name":"Player","index":-1, "packed":player_packedscene,"parent":actor_container, "offset":Vector2.ZERO},
 										{"type":1, "name":"Enemy","index":-1, "packed":0,"parent":actor_container, "offset":Vector2.ZERO}],
-						map_actor64:[	{"type":0, "name":"Player","index":-1, "packed":player_packedscene,"parent":actor_container, "offset":Vector2.ZERO},
+						map_actor64:[	{"type":0, "name":"Orc","index":-1, "packed":orc_packedscene,"parent":actor_container, "offset":Vector2.ZERO},
 										{"type":1, "name":"Enemy","index":-1, "packed":0,"parent":actor_container, "offset":Vector2.ZERO}]}
 	find_objects_indexes()
 	find_corresponding_cells()
@@ -60,3 +61,7 @@ func instantiate_objects(g_position, packedscene, parent, offset):
 
 func remove_cell(map, coord):
 	map.set_cellv(coord, -1)
+
+
+func on_portal_player_entering(scene):
+	print("change to: ", scene)

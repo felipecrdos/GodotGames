@@ -183,7 +183,7 @@ animations = [ {
 "name": "Hurt",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 41 ), SubResource( 41 ), SubResource( 42 ), SubResource( 42 ) ],
+"frames": [ SubResource( 41 ), SubResource( 41 ), SubResource( 42 ) ],
 "loop": true,
 "name": "Lookingup",
 "speed": 1.0

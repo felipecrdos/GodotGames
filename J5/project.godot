@@ -8,9 +8,26 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://script/Enemy.gd"
+}, {
+"base": "Enemy",
+"class": "EnemyPatrol",
+"language": "GDScript",
+"path": "res://script/EnemyPatrol.gd"
+}, {
+"base": "EnemyPatrol",
+"class": "Orc",
+"language": "GDScript",
+"path": "res://script/Orc.gd"
+} ]
 _global_script_class_icons={
-
+"Enemy": "",
+"EnemyPatrol": "",
+"Orc": ""
 }
 
 [application]

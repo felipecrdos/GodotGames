@@ -3,10 +3,10 @@
 [ext_resource path="res://resouce/PlayerAnimation.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://script/Player.gd" type="Script" id=2]
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5, 5 )
 
-[sub_resource type="RectangleShape2D" id=14]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 8 )
 
 [node name="Player" type="KinematicBody2D"]
@@ -20,21 +20,21 @@ __meta__ = {
 [node name="ASprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 1 )
 animation = "Running"
-frame = 4
+frame = 5
 playing = true
 offset = Vector2( 1, -8 )
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, 3 )
-shape = SubResource( 13 )
+shape = SubResource( 1 )
 
-[node name="Area" type="Area2D" parent="."]
+[node name="BodyArea" type="Area2D" parent="."]
 collision_mask = 26
 
-[node name="Shape" type="CollisionShape2D" parent="Area"]
+[node name="Shape" type="CollisionShape2D" parent="BodyArea"]
 visible = false
-shape = SubResource( 14 )
+shape = SubResource( 2 )
 
 [node name="PoseTimer" type="Timer" parent="."]
 wait_time = 8.0

@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-enum State {IDLE, RUNNING, JUMPING, FALLING, LANDING, VICTORY, POSE}
+enum State {IDLE, RUNNING, JUMPING, FALLING, LANDING, VICTORY, RANDPOSE}
 enum Func {INPUT, HMOVE, VMOVE}
 var poses_names
 var pose_name
@@ -20,13 +20,14 @@ var in_air
 var animation
 var pose_timer
 func _ready():
+	Global.player = self
 	funcs_names = [	"idle_state", 
 					"running_state", 
 					"jumping_state",
 					"falling_state",
 					"landing_state",
 					"victory_state",
-					"pose_state"]
+					"rand_pose_state"]
 											#input,hmove,vmove
 	funcs_masks = {	State.IDLE		:[true, true, true],
 					State.RUNNING	:[true, true, true],
@@ -34,7 +35,7 @@ func _ready():
 					State.FALLING	:[true, true, true],
 					State.LANDING	:[true, true, true],
 					State.VICTORY	:[false, false, false],
-					State.POSE		:[true, true, true]}
+					State.RANDPOSE	:[true, true, true]}
 	
 	funcs_refs = []
 	state = State.RUNNING
@@ -127,7 +128,7 @@ func landing_state(delta):
 	if velocity.x:
 		state = State.RUNNING
 
-func pose_state(delta):
+func rand_pose_state(delta):
 	animation.play(pose_name)
 	if velocity.x:
 		state = State.RUNNING
@@ -138,8 +139,8 @@ func pose_state(delta):
 
 func on_pose_timer_timeout():
 	if state == State.IDLE:
-		state = State.POSE
-		var size =poses_names.size()
+		state = State.RANDPOSE
+		var size = poses_names.size()
 		var index = randi()%size
 		pose_name = poses_names[index]
 
