@@ -1,7 +1,8 @@
 extends KinematicBody2D
 
-enum State {IDLE, RUNNING, JUMPING, FALLING, ATTACKING, 
+enum State {IDLE, RUNNING, JUMPING, FALLING, 
 			LANDING, VICTORY, RANDPOSE, DYING}
+enum Attack {ATTACK_ONE, ATTACK_TWO, ATTACK_THREE}
 enum Func {INPUT, HMOVE, VMOVE}
 var poses_names
 var pose_name
@@ -17,11 +18,11 @@ var jump_force
 var can_jump
 var is_jump
 var in_air
-var can_attacking
-var is_attacking
-var attack_damage
 var pose_timer
 var face
+var can_attacking
+var attack_damage
+var is_attacking : Array
 
 var max_health
 var health setget set_health
@@ -31,7 +32,6 @@ func _ready():
 					"running_state", 
 					"jumping_state",
 					"falling_state",
-					"attacking_state",
 					"landing_state",
 					"victory_state",
 					"rand_pose_state",
@@ -41,7 +41,6 @@ func _ready():
 					State.RUNNING	:[true, true, true],
 					State.JUMPING	:[true, true, true],
 					State.FALLING	:[true, true, true],
-					State.ATTACKING	:[true, true, true],
 					State.LANDING	:[true, true, true],
 					State.VICTORY	:[false, false, false],
 					State.RANDPOSE	:[true, true, true],
@@ -70,7 +69,10 @@ func _ready():
 	in_air 		= false
 	
 	can_attacking = true
-	is_attacking = false
+	is_attacking.resize(3)
+	is_attacking[Attack.ATTACK_ONE] 	= false
+	is_attacking[Attack.ATTACK_TWO] 	= false
+	is_attacking[Attack.ATTACK_THREE] 	= false
 	randomize()
 	
 func set_funcs_refs(names):
@@ -85,6 +87,7 @@ func _physics_process(delta):
 	else: velocity.y = 0
 	
 	move()
+	#update_attack()
 	funcs_refs[state].call_func(delta)
 
 func input():
@@ -93,24 +96,31 @@ func input():
 		direction.x += 1
 		face = 1
 		$ASprite.flip_h = false
-		$FireBreath/ASprite.flip_h = false
-		$FireBreath.position.x = abs($FireBreath.position.x)
+		$AttackOne/ASprite.flip_h = false
+		$AttackOne.position.x = abs($AttackOne.position.x)
 		
 	if Input.is_action_pressed("ui_left"):
 		direction.x -= 1
 		face = -1
 		$ASprite.flip_h = true
-		$FireBreath/ASprite.flip_h = true
-		$FireBreath.position.x = -abs($FireBreath.position.x)
-		
-	if Input.is_key_pressed(KEY_E):
-		is_attacking = true
-	else: is_attacking = false
-		
+		$AttackOne/ASprite.flip_h = true
+		$AttackOne.position.x = -abs($AttackOne.position.x)
+	
 	if Input.is_action_pressed("ui_accept"):
 		if can_jump:
 			is_jump = true
 			
+	is_attacking[Attack.ATTACK_ONE] 	= false
+	is_attacking[Attack.ATTACK_TWO] 	= false
+	is_attacking[Attack.ATTACK_THREE] 	= false
+	if Input.is_key_pressed(KEY_1):
+		is_attacking[Attack.ATTACK_ONE] = true
+	if Input.is_key_pressed(KEY_2):
+		is_attacking[Attack.ATTACK_TWO] = true
+	if Input.is_key_pressed(KEY_3):
+		is_attacking[Attack.ATTACK_THREE] = true
+	update_attack()
+	
 func hmove():
 	velocity.x = direction.x * speed.x
 	
@@ -126,17 +136,13 @@ func idle_state(delta):
 		state = State.RUNNING
 	if is_jump:
 		state = State.JUMPING
-	if is_attacking:
-		state = State.ATTACKING
-		
+
 func running_state(delta): 
 	$ASprite.play("Running")
 	if !velocity.x && !velocity.y:
 		state = State.IDLE	
 	if is_jump:
 		state = State.JUMPING
-	if is_attacking:
-		state = State.ATTACKING
 		
 func jumping_state(delta):
 	$ASprite.play("Jumping")
@@ -153,28 +159,6 @@ func falling_state(delta):
 		can_jump = true
 		is_jump = false
 
-func attacking_state(delta):
-	if is_attacking:
-		$FireBreath/ASprite.visible = true
-		$FireBreath/ASprite.play("FireBreath")
-		
-		if $FireBreath.monitoring && $FireBreath/ASprite.frame == 1:
-			for body in $FireBreath.get_overlapping_bodies():
-				if Util.check_area_collision($FireBreath, body):
-					if body is Enemy:
-						body.pushback = 100 * face
-						body.health -= attack_damage
-					$FireBreath.set_deferred("monitoring", false)
-		if !velocity:
-			$ASprite.play("AttackIdle")
-		else:
-			$ASprite.play("AttackRun")
-	
-	elif !is_attacking:
-		$FireBreath/ASprite.visible = false
-		$FireBreath/ASprite.stop()
-		state = State.IDLE
-	
 func landing_state(delta):
 	if !velocity.x:
 		state = State.IDLE
@@ -194,7 +178,62 @@ func dying_state(delta):
 	$ASprite.play("Dying")
 	yield($ASprite, "animation_finished")
 	destroy()
+
+func update_attack():
+	attacking_one()
+	attacking_two()
+	attacking_three()
+
+func attacking_one():
+	if is_attacking[Attack.ATTACK_ONE]:
+		$AttackOne/ASprite.visible = true
+		$AttackOne/ASprite.play("AttackOne")
+		
+		if $AttackOne.monitoring && $AttackOne/ASprite.frame == 1:
+			for body in $AttackOne.get_overlapping_bodies():
+				if Util.check_area_collision($AttackOne, body):
+					if body is Enemy:
+						body.pushback = 100 * face
+						body.health -= attack_damage
+					$AttackOne.set_deferred("monitoring", false)
+
+	elif !is_attacking[Attack.ATTACK_ONE]:
+		$AttackOne/ASprite.visible = false
+		$AttackOne/ASprite.stop()
+
+func attacking_two():
+	if is_attacking[Attack.ATTACK_TWO]:
+		$AttackTwo/ASprite.visible = true
+		$AttackTwo/ASprite.play("AttackTwo")
+		
+		if $AttackTwo.monitoring && $AttackTwo/ASprite.frame == 1:
+			for body in $AttackTwo.get_overlapping_bodies():
+				if Util.check_area_collision($AttackTwo, body):
+					if body is Enemy:
+						body.pushback = 100 * face
+						body.health -= attack_damage
+					$AttackTwo.set_deferred("monitoring", false)
+	elif !is_attacking[Attack.ATTACK_TWO]:
+		$AttackTwo/ASprite.visible = false
+		$AttackTwo/ASprite.stop()
+
+func attacking_three():
+	if is_attacking[Attack.ATTACK_THREE]:
+		$AttackThree/ASprite.visible = true
+		$AttackThree/ASprite.play("AttackThree")
+		
+		if $AttackThree.monitoring && $AttackThree/ASprite.frame == 1:
+			for body in $AttackThree.get_overlapping_bodies():
+				if Util.check_area_collision($AttackThree, body):
+					if body is Enemy:
+						body.pushback = 100 * face
+						body.health -= attack_damage
+					$AttackThree.set_deferred("monitoring", false)
 	
+	elif !is_attacking[Attack.ATTACK_THREE]:
+		$AttackThree/ASprite.visible = false
+		$AttackThree/ASprite.stop()
+
 func on_pose_timer_timeout():
 	if state == State.IDLE:
 		state = State.RANDPOSE
@@ -203,7 +242,6 @@ func on_pose_timer_timeout():
 		pose_name = poses_names[index]
 
 func set_health(value):
-	print(value)
 	health = value
 	if health <= 0:
 		state = State.DYING
@@ -211,5 +249,9 @@ func set_health(value):
 func destroy():
 	queue_free()
 
-func on_firebrath_animation_finished():
-	$FireBreath.set_deferred("monitoring", true)
+func on_attackone_animation_finished():
+	$AttackOne.set_deferred("monitoring", true)
+func on_attacktwo_animation_finished():
+	$AttackTwo.set_deferred("monitoring", true)
+func on_attackthree_animation_finished():
+	$AttackThree.set_deferred("monitoring", true)

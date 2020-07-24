@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://resouce/PlayerAnimation.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://script/Player.gd" type="Script" id=2]
@@ -7,23 +7,69 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5, 5 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=19]
 atlas = ExtResource( 3 )
 region = Rect2( 224, 128, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=20]
 atlas = ExtResource( 3 )
 region = Rect2( 256, 128, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="SpriteFrames" id=17]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"frames": [ SubResource( 19 ), SubResource( 20 ) ],
 "loop": true,
-"name": "FireBreath",
-"speed": 5.0
+"name": "AttackOne",
+"speed": 10.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 832, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 3 )
+region = Rect2( 96, 832, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 3 )
+region = Rect2( 128, 832, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 3 )
+region = Rect2( 160, 832, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=18]
+animations = [ {
+"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
+"loop": true,
+"name": "AttackTwo",
+"speed": 10.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=16]
+extents = Vector2( 20, 20 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 3 )
+region = Rect2( 256, 352, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 3 )
+region = Rect2( 288, 352, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=21]
+animations = [ {
+"frames": [ SubResource( 23 ), SubResource( 24 ) ],
+"loop": true,
+"name": "AttackThree",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=25]
 extents = Vector2( 8, 8 )
 
 [sub_resource type="RectangleShape2D" id=6]
@@ -39,6 +85,7 @@ __meta__ = {
 }
 
 [node name="ASprite" type="AnimatedSprite" parent="."]
+z_index = 5
 frames = ExtResource( 1 )
 animation = "AttackIdle"
 offset = Vector2( 1, -8 )
@@ -47,19 +94,50 @@ offset = Vector2( 1, -8 )
 position = Vector2( 0, 3 )
 shape = SubResource( 1 )
 
-[node name="FireBreath" type="Area2D" parent="."]
+[node name="AttackOne" type="Area2D" parent="."]
 position = Vector2( 20, 0 )
 collision_layer = 0
 collision_mask = 2
 
-[node name="ASprite" type="AnimatedSprite" parent="FireBreath"]
+[node name="ASprite" type="AnimatedSprite" parent="AttackOne"]
 visible = false
 position = Vector2( 0, -6 )
-frames = SubResource( 4 )
-animation = "FireBreath"
+z_index = 10
+frames = SubResource( 17 )
+animation = "AttackOne"
 
-[node name="Shape" type="CollisionShape2D" parent="FireBreath"]
+[node name="Shape" type="CollisionShape2D" parent="AttackOne"]
 shape = SubResource( 5 )
+
+[node name="AttackTwo" type="Area2D" parent="."]
+position = Vector2( 0, -15 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="ASprite" type="AnimatedSprite" parent="AttackTwo"]
+visible = false
+scale = Vector2( 1.5, 1.5 )
+frames = SubResource( 18 )
+animation = "AttackTwo"
+frame = 2
+
+[node name="Shape" type="CollisionShape2D" parent="AttackTwo"]
+shape = SubResource( 16 )
+
+[node name="AttackThree" type="Area2D" parent="."]
+position = Vector2( 0, -15 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="ASprite" type="AnimatedSprite" parent="AttackThree"]
+visible = false
+frames = SubResource( 21 )
+animation = "AttackThree"
+frame = 1
+
+[node name="Shape" type="CollisionShape2D" parent="AttackThree"]
+position = Vector2( 0, -5 )
+shape = SubResource( 25 )
 
 [node name="BodyArea" type="Area2D" parent="."]
 collision_mask = 26
@@ -70,5 +148,7 @@ shape = SubResource( 6 )
 [node name="PoseTimer" type="Timer" parent="."]
 wait_time = 8.0
 autostart = true
-[connection signal="animation_finished" from="FireBreath/ASprite" to="." method="on_firebrath_animation_finished"]
+[connection signal="animation_finished" from="AttackOne/ASprite" to="." method="on_attackone_animation_finished"]
+[connection signal="animation_finished" from="AttackTwo/ASprite" to="." method="on_attacktwo_animation_finished"]
+[connection signal="animation_finished" from="AttackThree/ASprite" to="." method="on_attackthree_animation_finished"]
 [connection signal="timeout" from="PoseTimer" to="." method="on_pose_timer_timeout"]
