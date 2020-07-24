@@ -21,7 +21,7 @@ var can_attacking
 var is_attacking
 var attack_damage
 var pose_timer
-var face_direction
+var face
 
 var max_health
 var health setget set_health
@@ -91,14 +91,14 @@ func input():
 	direction.x = 0
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
-		face_direction = 1
+		face = 1
 		$ASprite.flip_h = false
 		$FireBreath/ASprite.flip_h = false
 		$FireBreath.position.x = abs($FireBreath.position.x)
 		
 	if Input.is_action_pressed("ui_left"):
 		direction.x -= 1
-		face_direction = -1
+		face = -1
 		$ASprite.flip_h = true
 		$FireBreath/ASprite.flip_h = true
 		$FireBreath.position.x = -abs($FireBreath.position.x)
@@ -155,17 +155,24 @@ func falling_state(delta):
 
 func attacking_state(delta):
 	if is_attacking:
-		$FireBreath.visible = true
+		$FireBreath/ASprite.visible = true
 		$FireBreath/ASprite.play("FireBreath")
-		Util.enable_monitoring_area_in_frame($FireBreath, $FireBreath/ASprite, 1)
-		if velocity.x: 
-			$ASprite.play("AttackRun")
-		else:
+		
+		if $FireBreath.monitoring && $FireBreath/ASprite.frame == 1:
+			for body in $FireBreath.get_overlapping_bodies():
+				if Util.check_area_collision($FireBreath, body):
+					if body is Enemy:
+						body.pushback = 100 * face
+						body.health -= attack_damage
+					$FireBreath.set_deferred("monitoring", false)
+		if !velocity:
 			$ASprite.play("AttackIdle")
+		else:
+			$ASprite.play("AttackRun")
+	
 	elif !is_attacking:
-		$FireBreath.visible = false
+		$FireBreath/ASprite.visible = false
 		$FireBreath/ASprite.stop()
-		$FireBreath.set_deferred("monitoring", false)
 		state = State.IDLE
 	
 func landing_state(delta):
@@ -201,9 +208,8 @@ func set_health(value):
 	if health <= 0:
 		state = State.DYING
 
-func on_firebreath_body_entered(body):
-	body.pushback_force = 100 * face_direction
-	body.health -= attack_damage
-
 func destroy():
 	queue_free()
+
+func on_firebrath_animation_finished():
+	$FireBreath.set_deferred("monitoring", true)

@@ -35,3 +35,10 @@ func check_area_collision(area: Area2D, body: Node):
 		if area.overlaps_body(body):
 			is_colliding = true
 	return is_colliding
+
+func check_area_collisions(area: Area2D):
+	var is_colliding = false
+	for body in area.get_overlapping_bodies():
+		print("hiting: ", body.name)
+		is_colliding = true
+	return is_colliding

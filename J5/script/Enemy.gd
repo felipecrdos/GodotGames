@@ -6,7 +6,7 @@ var direction
 var walk_speed
 var run_speed
 var frame_attack
-var pushback_force
+var pushback
 var gravity
 var vspeed
 var hspeed
@@ -28,7 +28,7 @@ func _ready():
 	max_health 	= 10
 	frame_attack = 0
 	vspeed		= 1
-	pushback_force = 10
+	pushback = 10
 	hspeed		= walk_speed
 	health 		= max_health
 	target		= Global.player

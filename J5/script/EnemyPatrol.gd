@@ -110,8 +110,8 @@ func attack_state(delta):
 	
 func hurt_state(delta):
 	$ASprite.play("Hurt")
-	velocity.x += pushback_force
-	pushback_force = lerp(pushback_force, 0, 0.1)
+	velocity.x += pushback
+	pushback = lerp(pushback, 0, 0.1)
 	yield($ASprite, "animation_finished")
 	if health <= 0:
 		state = State.DYING
