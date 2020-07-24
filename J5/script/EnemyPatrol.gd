@@ -2,13 +2,12 @@ extends Enemy
 class_name EnemyPatrol
 
 enum State {IDLE, WALK, RUNNING, JUMPING, FALLING, 
-			CHASE, ATTACK, HURT, PUSHBACK, DYING}
+			CHASE, ATTACK, HURT, DYING}
 enum Func {AI, HMOVE, VMOVE, LIMIT}
 func _ready():
 	funcs_names = [	"idle_state", "walk_state", "running_state",
 					"jumping_state", "falling_state", "chase_state",
-					"attack_state", "hurt_state", "pushback_state",
-					"dying_state"]
+					"attack_state", "hurt_state", "dying_state"]
 					
 	funcs_masks = {	State.IDLE		:[true, false, true],
 					State.WALK		:[true, true, true],
@@ -17,14 +16,14 @@ func _ready():
 					State.FALLING	:[true, true, true],
 					State.CHASE		:[true, true, true],
 					State.ATTACK	:[true, false, false],
-					State.HURT		:[true, true, true],
-					State.PUSHBACK	:[true, true, true],
-					State.DYING		:[true, true, true]}
+					State.HURT		:[true, false, true],
+					State.DYING		:[false, false, false]}
 
 	state 		= State.IDLE
 	walk_speed 	= 14
 	run_speed 	= 22
 	attack_damage = 2
+	frame_attack = 3
 	set_funcs_refs()
 
 
@@ -41,11 +40,11 @@ func _physics_process(delta):
 
 func ai():
 	if direction.x > 0:
-		animation.flip_h = false
-		hitbox_area.position.x = abs(hitbox_area.position.x)  
+		$ASprite.flip_h = false
+		$ASprite/HitBoxArea.position.x = abs($ASprite/HitBoxArea.position.x)  
 	if direction.x < 0:
-		animation.flip_h = true
-		hitbox_area.position.x = -abs(hitbox_area.position.x)
+		$ASprite.flip_h = true
+		$ASprite/HitBoxArea.position.x = -abs($ASprite/HitBoxArea.position.x)
 
 func hmove():
 	velocity.x = direction.x * hspeed
@@ -57,52 +56,73 @@ func move():
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func idle_state(delta):
-	animation.play("Idle")
+	$ASprite.play("Idle")
+	if Util.check_area_collision($ChaseArea, Global.player):
+		state = State.CHASE
 	
 func walk_state(delta):
-	animation.play("Walking")
+	$ASprite.play("Walking")
 	hspeed = walk_speed
-	
+	if Util.check_area_collision($ChaseArea, Global.player):
+		state = State.CHASE
+		
 	if is_on_wall():
 		state = State.IDLE
 		
 func running_state(delta):
-	animation.play("Running")
+	$ASprite.play("Running")
 	hspeed = run_speed
-	
+	if Util.check_area_collision($ChaseArea, Global.player):
+		state = State.CHASE
+		
 	if is_on_wall():
 		state = State.IDLE
 
 func jumping_state(delta):
-	animation.play("Jumping")
+	$ASprite.play("Jumping")
 
 func falling_state(delta):
-	animation.play("Falling")
+	$ASprite.play("Falling")
 	
 func chase_state(delta):
-	animation.play("Running")
+	$ASprite.play("Running")
 	hspeed = run_speed
-	if target:
+	if Util.check_area_collision($AttackArea, Global.player):
+		state = State.ATTACK
+	if !Util.check_area_collision($ChaseArea, Global.player) || !Global.player:
+		state = State.IDLE
+	if Global.player:
 		direction.x = sign(target.global_position.x - global_position.x)
-	else: state = State.IDLE
 		
 func attack_state(delta):
-	animation.play("Attacking")
-	if target:
+	$ASprite.play("Attacking")
+	if Global.player:
 		direction.x = sign(target.global_position.x - global_position.x)
-		Util.enable_monitoring_area_in_frame(hitbox_area, animation, 3)
-	else: state = State.IDLE
+	if $ASprite.frame == frame_attack:
+		if Util.check_area_collision($ASprite/HitBoxArea, Global.player):
+			Global.player.health -= attack_damage
+			$ASprite/HitBoxArea.set_deferred("monitoring", false)
+	yield($ASprite, "animation_finished")
+	$ASprite/HitBoxArea.set_deferred("monitoring", true)
+	
+	if !Util.check_area_collision($AttackArea, Global.player) || !Global.player:
+		state = State.IDLE
 	
 func hurt_state(delta):
-	animation.play("Hurt")
+	$ASprite.play("Hurt")
+	velocity.x += pushback_force
+	pushback_force = lerp(pushback_force, 0, 0.1)
+	yield($ASprite, "animation_finished")
+	if health <= 0:
+		state = State.DYING
+	else:
+		state = State.IDLE
 	
 func dying_state(delta):
-	Util.disable_all_child_area(self)
-	animation.play("Dying")
-#	$Shape.set_deferred("disabled", true)
-	yield(animation, "animation_finished")
+	$ASprite.play("Dying")
+	yield($ASprite, "animation_finished")
 	destroy()
-
+		
 func on_change_state_timeout():
 	randomize()
 	match state:
@@ -115,25 +135,8 @@ func on_change_state_timeout():
 	
 func set_health(value):
 	health = value
-	if health <= 0:
-		state = State.DYING
-	
+	state = State.HURT
+		
 func destroy():
 	queue_free()
-	
-func on_chase_area_body_entered(body):
-	if state != State.ATTACK:
-		state = State.CHASE
-	
-func on_chase_area_body_exited(body):
-	state = State.IDLE
 
-func on_attack_area_body_entered(body):
-	if state != State.ATTACK:
-		state = State.ATTACK
-		
-func on_attack_area_body_exited(body):
-	state = State.CHASE
-
-func on_hitbox_body_entered(body):
-	body.health -= attack_damage

@@ -21,6 +21,7 @@ var can_attacking
 var is_attacking
 var attack_damage
 var pose_timer
+var face_direction
 
 var max_health
 var health setget set_health
@@ -54,7 +55,7 @@ func _ready():
 	direction 	= Vector2(0, 1) 
 	speed 		= Vector2(100, 19.6)
 	jump_force 	= Vector2(0, -400)
-	attack_damage = 5
+	attack_damage = 1
 	
 	poses_names = [	"Laughing", 
 					"Around",
@@ -90,12 +91,14 @@ func input():
 	direction.x = 0
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
+		face_direction = 1
 		$ASprite.flip_h = false
 		$FireBreath/ASprite.flip_h = false
 		$FireBreath.position.x = abs($FireBreath.position.x)
 		
 	if Input.is_action_pressed("ui_left"):
 		direction.x -= 1
+		face_direction = -1
 		$ASprite.flip_h = true
 		$FireBreath/ASprite.flip_h = true
 		$FireBreath.position.x = -abs($FireBreath.position.x)
@@ -193,11 +196,13 @@ func on_pose_timer_timeout():
 		pose_name = poses_names[index]
 
 func set_health(value):
+	print(value)
 	health = value
 	if health <= 0:
 		state = State.DYING
 
 func on_firebreath_body_entered(body):
+	body.pushback_force = 100 * face_direction
 	body.health -= attack_damage
 
 func destroy():

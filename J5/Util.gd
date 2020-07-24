@@ -28,3 +28,10 @@ func enable_all_child_area(parent : Node2D):
 	for child in parent.get_children():
 		if child is Area2D:
 			child.set_deferred("monitoring", true)
+
+func check_area_collision(area: Area2D, body: Node):
+	var is_colliding = false
+	if area && body:
+		if area.overlaps_body(body):
+			is_colliding = true
+	return is_colliding

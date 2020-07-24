@@ -11,8 +11,6 @@ var gravity
 var vspeed
 var hspeed
 var state
-var animation
-var hitbox_area
 var funcs_names
 var funcs_masks
 var funcs_refs
@@ -22,8 +20,6 @@ var max_health
 var health setget set_health
 
 func _ready():
-	animation	= $ASprite
-	hitbox_area = $ASprite/HitBoxArea
 	velocity  	= Vector2.ZERO
 	direction 	= Vector2.ZERO
 	walk_speed 	= 8 
@@ -44,3 +40,22 @@ func set_funcs_refs():
 
 func set_health(value):
 	pass
+
+
+func on_hitbox_area_body_entered(body):
+	pass # Replace with function body.
+
+func on_chase_area_body_entered():
+	pass # Replace with function body.
+
+func on_attack_area_body_entered():
+	pass # Replace with function body.
+
+func on_chase_area_body_exit():
+	pass # Replace with function body.
+
+func on_attack_area_body_exit():
+	pass # Replace with function body.
+
+func on_hitbox_area_body_exit(body):
+	pass # Replace with function body.

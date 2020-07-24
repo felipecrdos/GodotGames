@@ -32,6 +32,11 @@ region = Rect2( 448, 128, 64, 32 )
 [sub_resource type="SpriteFrames" id=8]
 resource_local_to_scene = true
 animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "Attacking",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
 "loop": true,
 "name": "Idle",
@@ -45,11 +50,6 @@ animations = [ {
 "frames": [  ],
 "loop": true,
 "name": "Hurt",
-"speed": 5.0
-}, {
-"frames": [  ],
-"loop": true,
-"name": "Attacking",
 "speed": 5.0
 } ]
 
@@ -82,7 +82,6 @@ animation = "Dying"
 
 [node name="HitBoxArea" type="Area2D" parent="ASprite"]
 position = Vector2( 20, 10 )
-monitoring = false
 collision_layer = 0
 
 [node name="Shape" type="CollisionShape2D" parent="ASprite/HitBoxArea"]
@@ -107,9 +106,4 @@ collision_layer = 2
 shape = SubResource( 12 )
 
 [node name="ChangeStateTimer" type="Timer" parent="."]
-[connection signal="body_entered" from="ASprite/HitBoxArea" to="." method="on_hitbox_body_entered"]
-[connection signal="body_entered" from="ChaseArea" to="." method="on_chase_area_body_entered"]
-[connection signal="body_exited" from="ChaseArea" to="." method="on_chase_area_body_exited"]
-[connection signal="body_entered" from="AttackArea" to="." method="on_attack_area_body_entered"]
-[connection signal="body_exited" from="AttackArea" to="." method="on_attack_area_body_exited"]
 [connection signal="timeout" from="ChangeStateTimer" to="." method="on_change_state_timeout"]
