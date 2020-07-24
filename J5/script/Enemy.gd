@@ -10,14 +10,16 @@ var pushback_force
 var gravity
 var vspeed
 var hspeed
-var health
-var max_health
 var state
 var animation
 var hitbox_area
 var funcs_names
 var funcs_masks
 var funcs_refs
+var attack_damage
+var target
+var max_health
+var health setget set_health
 
 func _ready():
 	animation	= $ASprite
@@ -33,10 +35,12 @@ func _ready():
 	pushback_force = 10
 	hspeed		= walk_speed
 	health 		= max_health
-	
+	target		= Global.player
 	funcs_refs = []
 	
 func set_funcs_refs():
 	for nam in funcs_names:
 		funcs_refs.append(funcref(self, nam))
 
+func set_health(value):
+	pass

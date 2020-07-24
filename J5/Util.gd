@@ -16,3 +16,15 @@ func enable_monitoring_area_in_frame(area:Area2D ,animation:AnimatedSprite, fram
 			area.set_deferred("monitoring", true)
 		yield(animation, "animation_finished")
 		area.set_deferred("monitoring", false)
+
+# Desabilitar as áreas dos filhos de um node.
+func disable_all_child_area(parent : Node2D):
+	for child in parent.get_children():
+		if child is Area2D:
+			child.set_deferred("monitoring", false)
+
+# Abilitar as áreas dos filhos de um node.
+func enable_all_child_area(parent : Node2D):
+	for child in parent.get_children():
+		if child is Area2D:
+			child.set_deferred("monitoring", true)

@@ -3,8 +3,7 @@ class_name EnemyPatrol
 
 enum State {IDLE, WALK, RUNNING, JUMPING, FALLING, 
 			CHASE, ATTACK, HURT, PUSHBACK, DYING}
-enum Func {AI, HMOVE, VMOVE}
-
+enum Func {AI, HMOVE, VMOVE, LIMIT}
 func _ready():
 	funcs_names = [	"idle_state", "walk_state", "running_state",
 					"jumping_state", "falling_state", "chase_state",
@@ -22,10 +21,13 @@ func _ready():
 					State.PUSHBACK	:[true, true, true],
 					State.DYING		:[true, true, true]}
 
-	state 	= State.IDLE
-	walk_speed = 14
-	run_speed = 22
+	state 		= State.IDLE
+	walk_speed 	= 14
+	run_speed 	= 22
+	attack_damage = 2
 	set_funcs_refs()
+
+
 	
 func _physics_process(delta):
 	if funcs_masks[state][Func.AI]:ai()
@@ -61,9 +63,15 @@ func walk_state(delta):
 	animation.play("Walking")
 	hspeed = walk_speed
 	
+	if is_on_wall():
+		state = State.IDLE
+		
 func running_state(delta):
 	animation.play("Running")
 	hspeed = run_speed
+	
+	if is_on_wall():
+		state = State.IDLE
 
 func jumping_state(delta):
 	animation.play("Jumping")
@@ -74,18 +82,26 @@ func falling_state(delta):
 func chase_state(delta):
 	animation.play("Running")
 	hspeed = run_speed
-	direction.x = sign(Global.player.global_position.x - global_position.x)
+	if target:
+		direction.x = sign(target.global_position.x - global_position.x)
+	else: state = State.IDLE
 		
 func attack_state(delta):
 	animation.play("Attacking")
-	direction.x = sign(Global.player.global_position.x - global_position.x)
-	Util.enable_monitoring_area_in_frame(hitbox_area, animation, 3)
+	if target:
+		direction.x = sign(target.global_position.x - global_position.x)
+		Util.enable_monitoring_area_in_frame(hitbox_area, animation, 3)
+	else: state = State.IDLE
 	
 func hurt_state(delta):
 	animation.play("Hurt")
 	
 func dying_state(delta):
+	Util.disable_all_child_area(self)
 	animation.play("Dying")
+#	$Shape.set_deferred("disabled", true)
+	yield(animation, "animation_finished")
+	destroy()
 
 func on_change_state_timeout():
 	randomize()
@@ -96,9 +112,17 @@ func on_change_state_timeout():
 			var index = randi()%size
 			state = states[index]
 			direction.x = Util.choose([-1, 1])
-
+	
+func set_health(value):
+	health = value
+	if health <= 0:
+		state = State.DYING
+	
+func destroy():
+	queue_free()
+	
 func on_chase_area_body_entered(body):
-	if state != State.CHASE && state != State.ATTACK:
+	if state != State.ATTACK:
 		state = State.CHASE
 	
 func on_chase_area_body_exited(body):
@@ -112,8 +136,4 @@ func on_attack_area_body_exited(body):
 	state = State.CHASE
 
 func on_hitbox_body_entered(body):
-	print("hiting entered: ", body.name)
-	
-func on_hitbox_body_exited(body):
-	print("hiting exit: ", body.name)
-	hitbox_area.set_deferred("monitoring", false)
+	body.health -= attack_damage

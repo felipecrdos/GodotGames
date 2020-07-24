@@ -108,7 +108,6 @@ shape = SubResource( 12 )
 
 [node name="ChangeStateTimer" type="Timer" parent="."]
 [connection signal="body_entered" from="ASprite/HitBoxArea" to="." method="on_hitbox_body_entered"]
-[connection signal="body_exited" from="ASprite/HitBoxArea" to="." method="on_hitbox_body_exited"]
 [connection signal="body_entered" from="ChaseArea" to="." method="on_chase_area_body_entered"]
 [connection signal="body_exited" from="ChaseArea" to="." method="on_chase_area_body_exited"]
 [connection signal="body_entered" from="AttackArea" to="." method="on_attack_area_body_entered"]

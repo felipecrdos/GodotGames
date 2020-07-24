@@ -4,3 +4,4 @@ class_name Orc
 func _ready():
 	gravity = 10
 	frame_attack = 3
+	attack_damage = 2

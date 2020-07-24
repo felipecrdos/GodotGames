@@ -237,13 +237,13 @@ shape = SubResource( 1 )
 [node name="ASprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 42 )
 animation = "Idle"
-frame = 5
+frame = 1
 playing = true
 
 [node name="HitBoxArea" type="Area2D" parent="ASprite"]
 position = Vector2( 20, 10 )
 monitoring = false
-collision_layer = 2
+collision_layer = 0
 
 [node name="Shape" type="CollisionShape2D" parent="ASprite/HitBoxArea"]
 shape = SubResource( 43 )
