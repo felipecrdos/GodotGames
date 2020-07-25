@@ -16,7 +16,7 @@ func _ready():
 					State.FALLING	:[true, true, true],
 					State.CHASE		:[true, true, true],
 					State.ATTACK	:[true, false, false],
-					State.HURT		:[true, false, true],
+					State.HURT		:[false, false, true],
 					State.DYING		:[false, false, false]}
 
 	state 		= State.IDLE
@@ -24,6 +24,8 @@ func _ready():
 	run_speed 	= 22
 	attack_damage = 2
 	frame_attack = 3
+	gravity		 = 20.0
+	
 	set_funcs_refs()
 
 func _physics_process(delta):
@@ -34,15 +36,20 @@ func _physics_process(delta):
 	else: velocity.y = 0
 	
 	funcs_refs[state].call_func(delta)
+	bodyarea_collision()
 	move()
 
 func ai():
 	if direction.x > 0:
+		face = direction.x
 		$ASprite.flip_h = false
 		$ASprite/HitBoxArea.position.x = abs($ASprite/HitBoxArea.position.x)
 	if direction.x < 0:
+		face = direction.x
 		$ASprite.flip_h = true
 		$ASprite/HitBoxArea.position.x = -abs($ASprite/HitBoxArea.position.x)
+	face = -1 if $ASprite.flip_h else 1
+	
 func hmove():
 	velocity.x = direction.x * hspeed
 
@@ -56,7 +63,7 @@ func idle_state(delta):
 	$ASprite.play("Idle")
 	if Util.check_area_collision($ChaseArea, Global.player):
 		state = State.CHASE
-	
+		
 func walk_state(delta):
 	$ASprite.play("Walking")
 	hspeed = walk_speed
@@ -97,6 +104,8 @@ func attack_state(delta):
 		direction.x = sign(target.global_position.x - global_position.x)
 	if $ASprite.frame == frame_attack:
 		if Util.check_area_collision($ASprite/HitBoxArea, Global.player):
+			var tdir = Util.target_hdirect(Global.player, self)
+			Global.player.pushback = float(attack_force * tdir)
 			Global.player.health -= attack_damage
 			print(Global.player.health)
 			$ASprite/HitBoxArea.set_deferred("monitoring", false)
@@ -108,13 +117,14 @@ func attack_state(delta):
 		state = State.IDLE
 	
 func hurt_state(delta):
-	$ASprite.play("Hurt")
-	velocity.x += pushback
-	pushback = lerp(pushback, 0, 0.1)
-	yield($ASprite, "animation_finished")
+	if health > 0:
+		$ASprite.play("Hurt")
+		velocity.x += pushback
+		pushback = lerp(pushback, 0, 0.2)
+
 	if health <= 0:
 		state = State.DYING
-	else:
+	if abs(pushback) < 0.01:
 		state = State.IDLE
 	
 func dying_state(delta):
@@ -135,7 +145,16 @@ func on_change_state_timeout():
 func set_health(value):
 	health = value
 	state = State.HURT
-		
+
+
+func bodyarea_collision():
+	if state != State.HURT && Global.player:
+		if Util.check_area_collision($BodyArea, Global.player):
+			Global.player.pushback = float(attack_force * face)
+			Global.player.health -= attack_damage
+			$BodyArea.set_deferred("monitoring", false)
+		elif state != State.ATTACK: 
+			$BodyArea.set_deferred("monitoring", true)
+	
 func destroy():
 	queue_free()
-

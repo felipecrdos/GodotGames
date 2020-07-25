@@ -15,8 +15,10 @@ var funcs_names
 var funcs_masks
 var funcs_refs
 var attack_damage
+var attack_force
 var target
 var max_health
+var face
 var health setget set_health
 
 func _ready():
@@ -27,6 +29,7 @@ func _ready():
 	gravity		= 0
 	max_health 	= 10
 	frame_attack = 0
+	attack_force = 100
 	vspeed		= 1
 	pushback = 10
 	hspeed		= walk_speed
@@ -34,9 +37,10 @@ func _ready():
 	target		= Global.player
 	funcs_refs = []
 	
+func set_health(value):
+	pass
+
 func set_funcs_refs():
 	for nam in funcs_names:
 		funcs_refs.append(funcref(self, nam))
 
-func set_health(value):
-	pass

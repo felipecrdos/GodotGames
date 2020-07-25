@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 enum State {IDLE, RUNNING, JUMPING, FALLING, 
-			LANDING, VICTORY, RANDPOSE, DYING}
+			LANDING, VICTORY, RANDPOSE, HURT, DYING}
 enum Attack {ATTACK_ONE, ATTACK_TWO, ATTACK_THREE}
 enum Func {INPUT, HMOVE, VMOVE}
 var poses_names
@@ -18,10 +18,12 @@ var jump_force
 var can_jump
 var is_jump
 var in_air
+var pushback
 var pose_timer
 var face
 var can_attacking
 var attack_damage
+var attack_force
 var is_attacking : Array
 
 var max_health
@@ -35,6 +37,7 @@ func _ready():
 					"landing_state",
 					"victory_state",
 					"rand_pose_state",
+					"hurt_state",
 					"dying_state"]
 											#input,hmove,vmove
 	funcs_masks = {	State.IDLE		:[true, true, true],
@@ -44,7 +47,8 @@ func _ready():
 					State.LANDING	:[true, true, true],
 					State.VICTORY	:[false, false, false],
 					State.RANDPOSE	:[true, true, true],
-					State.DYING		:[false, false, false]}
+					State.HURT		:[false, false, true],
+					State.DYING		:[false, false, true]}
 	
 	funcs_refs = []
 	state = State.RUNNING
@@ -55,6 +59,8 @@ func _ready():
 	speed 		= Vector2(100, 19.6)
 	jump_force 	= Vector2(0, -400)
 	attack_damage = 1
+	attack_force = 300
+	pushback = 100
 	
 	poses_names = [	"Laughing", 
 					"Around",
@@ -82,29 +88,26 @@ func set_funcs_refs(names):
 func _physics_process(delta):
 	if funcs_masks[state][Func.INPUT]: input()	
 	if funcs_masks[state][Func.HMOVE]: hmove() 
-	else: velocity.x = 0
 	if funcs_masks[state][Func.VMOVE]: vmove()
-	else: velocity.y = 0
 	
 	move()
-	#update_attack()
+	update_attack()
 	funcs_refs[state].call_func(delta)
 
 func input():
 	direction.x = 0
 	if Input.is_action_pressed("ui_right"):
-		direction.x += 1
-		face = 1
+		direction.x = 1
 		$ASprite.flip_h = false
 		$AttackOne/ASprite.flip_h = false
 		$AttackOne.position.x = abs($AttackOne.position.x)
 		
 	if Input.is_action_pressed("ui_left"):
-		direction.x -= 1
-		face = -1
+		direction.x = -1
 		$ASprite.flip_h = true
 		$AttackOne/ASprite.flip_h = true
 		$AttackOne.position.x = -abs($AttackOne.position.x)
+	face = -1 if $ASprite.flip_h else 1
 	
 	if Input.is_action_pressed("ui_accept"):
 		if can_jump:
@@ -119,7 +122,6 @@ func input():
 		is_attacking[Attack.ATTACK_TWO] = true
 	if Input.is_key_pressed(KEY_3):
 		is_attacking[Attack.ATTACK_THREE] = true
-	update_attack()
 	
 func hmove():
 	velocity.x = direction.x * speed.x
@@ -174,8 +176,23 @@ func rand_pose_state(delta):
 	yield($ASprite, "animation_finished")
 	state = State.IDLE
 
+func hurt_state(delta):
+	$ASprite.play("Hurt")
+	velocity.x += pushback
+	velocity.y -= abs(pushback) * 2
+	pushback = lerp(pushback, 0, 0.4)
+	
+	if health <= 0:
+		state = State.DYING
+		
+	if abs(pushback) < 0.001:
+		state = State.IDLE
+		
 func dying_state(delta):
 	$ASprite.play("Dying")
+	velocity.x = 0
+	velocity.y = 0
+	collision_layer = 0
 	yield($ASprite, "animation_finished")
 	destroy()
 
@@ -193,7 +210,7 @@ func attacking_one():
 			for body in $AttackOne.get_overlapping_bodies():
 				if Util.check_area_collision($AttackOne, body):
 					if body is Enemy:
-						body.pushback = 100 * face
+						body.pushback = attack_force * face
 						body.health -= attack_damage
 					$AttackOne.set_deferred("monitoring", false)
 
@@ -210,7 +227,8 @@ func attacking_two():
 			for body in $AttackTwo.get_overlapping_bodies():
 				if Util.check_area_collision($AttackTwo, body):
 					if body is Enemy:
-						body.pushback = 50 * face
+						var tdir = Util.target_hdirect(body, self)
+						body.pushback = float(attack_force * tdir)
 						body.health -= attack_damage
 					$AttackTwo.set_deferred("monitoring", false)
 	elif !is_attacking[Attack.ATTACK_TWO]:
@@ -243,8 +261,9 @@ func on_pose_timer_timeout():
 
 func set_health(value):
 	health = value
-	if health <= 0:
-		state = State.DYING
+	velocity.x = 0
+	velocity.y = 0
+	state = State.HURT
 
 func destroy():
 	queue_free()

@@ -189,7 +189,7 @@ animations = [ {
 extents = Vector2( 5, 5 )
 
 [sub_resource type="RectangleShape2D" id=38]
-extents = Vector2( 10, 14 )
+extents = Vector2( 12, 16 )
 
 [sub_resource type="CircleShape2D" id=39]
 radius = 100.0

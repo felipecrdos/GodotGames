@@ -42,3 +42,9 @@ func check_area_collisions(area: Area2D):
 		print("hiting: ", body.name)
 		is_colliding = true
 	return is_colliding
+
+# Retorna a direção horizontal
+func target_hdirect(target, this):
+	var posx = this.global_position.x
+	var tposx = target.global_position.x
+	return  sign(tposx - posx)

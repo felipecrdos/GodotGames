@@ -119,7 +119,7 @@ animations = [ {
 "frames": [ SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ) ],
 "loop": true,
 "name": "Attacking",
-"speed": 10.0
+"speed": 6.0
 }, {
 "frames": [ SubResource( 55 ) ],
 "loop": false,
@@ -141,7 +141,7 @@ animations = [ {
 extents = Vector2( 6, 10 )
 
 [sub_resource type="RectangleShape2D" id=38]
-extents = Vector2( 18, 10 )
+extents = Vector2( 20, 12 )
 
 [sub_resource type="CircleShape2D" id=39]
 radius = 80.0
