@@ -206,11 +206,11 @@ func attacking_two():
 		$AttackTwo/ASprite.visible = true
 		$AttackTwo/ASprite.play("AttackTwo")
 		
-		if $AttackTwo.monitoring && $AttackTwo/ASprite.frame == 1:
+		if $AttackTwo.monitoring && $AttackTwo/ASprite.frame%2 == 0:
 			for body in $AttackTwo.get_overlapping_bodies():
 				if Util.check_area_collision($AttackTwo, body):
 					if body is Enemy:
-						body.pushback = 100 * face
+						body.pushback = 50 * face
 						body.health -= attack_damage
 					$AttackTwo.set_deferred("monitoring", false)
 	elif !is_attacking[Attack.ATTACK_TWO]:

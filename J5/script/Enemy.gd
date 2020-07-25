@@ -40,22 +40,3 @@ func set_funcs_refs():
 
 func set_health(value):
 	pass
-
-
-func on_hitbox_area_body_entered(body):
-	pass # Replace with function body.
-
-func on_chase_area_body_entered():
-	pass # Replace with function body.
-
-func on_attack_area_body_entered():
-	pass # Replace with function body.
-
-func on_chase_area_body_exit():
-	pass # Replace with function body.
-
-func on_attack_area_body_exit():
-	pass # Replace with function body.
-
-func on_hitbox_area_body_exit(body):
-	pass # Replace with function body.

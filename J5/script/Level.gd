@@ -2,6 +2,9 @@ extends Node2D
 
 export (PackedScene) var player_packedscene
 export (PackedScene) var orc_packedscene
+export (PackedScene) var alligator_packedscene
+export (PackedScene) var bear_packedscene
+
 export (PackedScene) var portal_packedscene
 export (PackedScene) var coin_packedscene
 export (PackedScene) var chest_packedscene
@@ -25,11 +28,11 @@ func _ready():
 	map_actor64 	= $ActorMap64
 	
 	maps_to_actors = {	map_actor16:[	{"type":0, "name":"Player","index":-1, "packed":player_packedscene,"parent":actor_container, "offset":Vector2.ZERO},
-										{"type":1, "name":"Enemy","index":-1, "packed":0,"parent":actor_container, "offset":Vector2.ZERO}],
+										{"type":0, "name":"Enemy","index":-1, "packed":0,"parent":actor_container, "offset":Vector2.ZERO}],
 						map_actor32:[	{"type":0, "name":"Player","index":-1, "packed":player_packedscene,"parent":actor_container, "offset":Vector2.ZERO},
-										{"type":1, "name":"Enemy","index":-1, "packed":0,"parent":actor_container, "offset":Vector2.ZERO}],
+										{"type":0, "name":"Alligator","index":-1, "packed":alligator_packedscene,"parent":actor_container, "offset":Vector2.ZERO}],
 						map_actor64:[	{"type":0, "name":"Orc","index":-1, "packed":orc_packedscene,"parent":actor_container, "offset":Vector2.ZERO},
-										{"type":1, "name":"Enemy","index":-1, "packed":0,"parent":actor_container, "offset":Vector2.ZERO}]}
+										{"type":0, "name":"Bear","index":-1, "packed":bear_packedscene,"parent":actor_container, "offset":Vector2.ZERO}]}
 	find_objects_indexes()
 	find_corresponding_cells()
 	

@@ -26,8 +26,6 @@ func _ready():
 	frame_attack = 3
 	set_funcs_refs()
 
-
-	
 func _physics_process(delta):
 	if funcs_masks[state][Func.AI]:ai()
 	if funcs_masks[state][Func.HMOVE]:hmove()
@@ -41,11 +39,10 @@ func _physics_process(delta):
 func ai():
 	if direction.x > 0:
 		$ASprite.flip_h = false
-		$ASprite/HitBoxArea.position.x = abs($ASprite/HitBoxArea.position.x)  
+		$ASprite/HitBoxArea.position.x = abs($ASprite/HitBoxArea.position.x)
 	if direction.x < 0:
 		$ASprite.flip_h = true
 		$ASprite/HitBoxArea.position.x = -abs($ASprite/HitBoxArea.position.x)
-
 func hmove():
 	velocity.x = direction.x * hspeed
 
@@ -101,7 +98,9 @@ func attack_state(delta):
 	if $ASprite.frame == frame_attack:
 		if Util.check_area_collision($ASprite/HitBoxArea, Global.player):
 			Global.player.health -= attack_damage
+			print(Global.player.health)
 			$ASprite/HitBoxArea.set_deferred("monitoring", false)
+			
 	yield($ASprite, "animation_finished")
 	$ASprite/HitBoxArea.set_deferred("monitoring", true)
 	

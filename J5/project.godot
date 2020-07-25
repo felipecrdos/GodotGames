@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "EnemyPatrol",
+"class": "Alligator",
+"language": "GDScript",
+"path": "res://script/Alligator.gd"
+}, {
+"base": "EnemyPatrol",
+"class": "Bear",
+"language": "GDScript",
+"path": "res://script/Bear.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
@@ -25,6 +35,8 @@ _global_script_classes=[ {
 "path": "res://script/Orc.gd"
 } ]
 _global_script_class_icons={
+"Alligator": "",
+"Bear": "",
 "Enemy": "",
 "EnemyPatrol": "",
 "Orc": ""

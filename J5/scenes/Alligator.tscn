@@ -1,0 +1,168 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://script/Alligator.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprite/CharTilesheet32x32.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 14, 8 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 96, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 256, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 224, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 3 )
+region = Rect2( 192, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 160, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 3 )
+region = Rect2( 128, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 96, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 3 )
+region = Rect2( 288, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 3 )
+region = Rect2( 96, 608, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 608, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 608, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 608, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 3 )
+region = Rect2( 256, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 640, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 640, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=17]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "Jumping",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "Walking",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "Running",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 8 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
+"loop": true,
+"name": "Attacking",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 15 ) ],
+"loop": false,
+"name": "Hurt",
+"speed": 4.0
+}, {
+"frames": [ SubResource( 16 ) ],
+"loop": false,
+"name": "Dying",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": false,
+"name": "Falling",
+"speed": 1.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 5, 5 )
+
+[sub_resource type="RectangleShape2D" id=19]
+extents = Vector2( 16, 10 )
+
+[sub_resource type="CircleShape2D" id=20]
+radius = 60.0
+
+[sub_resource type="CircleShape2D" id=21]
+radius = 16.0
+
+[node name="Alligator" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="ASprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 17 )
+animation = "Running"
+offset = Vector2( 0, -8 )
+
+[node name="HitBoxArea" type="Area2D" parent="ASprite"]
+position = Vector2( 15, 0 )
+collision_layer = 0
+
+[node name="Shape" type="CollisionShape2D" parent="ASprite/HitBoxArea"]
+shape = SubResource( 18 )
+
+[node name="BodyArea" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Shape" type="CollisionShape2D" parent="BodyArea"]
+shape = SubResource( 19 )
+
+[node name="ChaseArea" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Shape" type="CollisionShape2D" parent="ChaseArea"]
+shape = SubResource( 20 )
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Shape" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource( 21 )
+
+[node name="ChangeStateTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+[connection signal="timeout" from="ChangeStateTimer" to="." method="on_change_state_timeout"]
