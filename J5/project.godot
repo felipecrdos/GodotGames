@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://script/Bear.gd"
 }, {
+"base": "Node2D",
+"class": "Effect",
+"language": "GDScript",
+"path": "res://script/Effect.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
@@ -37,6 +42,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Alligator": "",
 "Bear": "",
+"Effect": "",
 "Enemy": "",
 "EnemyPatrol": "",
 "Orc": ""
@@ -52,6 +58,7 @@ config/icon="res://icon.png"
 
 Global="*res://Global.gd"
 Util="*res://Util.gd"
+Efx="*res://Efx.gd"
 
 [display]
 

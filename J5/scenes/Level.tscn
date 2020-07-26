@@ -50,11 +50,13 @@ tile_data = PoolIntArray( 196610, 0, 0, 196611, 1, 0 )
 
 [node name="PickupContainer" type="Node2D" parent="."]
 
-[node name="TriggerableContainer" type="Node2D" parent="."]
+[node name="TriggerContainer" type="Node2D" parent="."]
 
-[node name="Portal" parent="TriggerableContainer" instance=ExtResource( 7 )]
+[node name="Portal" parent="TriggerContainer" instance=ExtResource( 7 )]
 position = Vector2( 296, 152 )
+
+[node name="EffectContainer" type="Node2D" parent="."]
 
 [node name="Pause" parent="." instance=ExtResource( 2 )]
 visible = false
-[connection signal="player_entering_portal" from="TriggerableContainer/Portal" to="." method="on_portal_player_entering"]
+[connection signal="player_entering_portal" from="TriggerContainer/Portal" to="." method="on_portal_player_entering"]

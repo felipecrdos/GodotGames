@@ -157,4 +157,5 @@ func bodyarea_collision():
 			$BodyArea.set_deferred("monitoring", true)
 	
 func destroy():
+	Efx.create_effect("SmokeExplosion",global_position, Vector2(2, 2))
 	queue_free()

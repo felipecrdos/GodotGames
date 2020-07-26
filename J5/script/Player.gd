@@ -153,6 +153,9 @@ func jumping_state(delta):
 		velocity.y = jump_force.y
 	if velocity.y > 0:
 		state = State.FALLING
+	
+	if is_on_floor():
+		state = State.LANDING
 		
 func falling_state(delta):
 	$ASprite.play("Falling")
@@ -263,9 +266,11 @@ func set_health(value):
 	health = value
 	velocity.x = 0
 	velocity.y = 0
-	state = State.HURT
+	if state != State.DYING:
+		state = State.HURT
 
 func destroy():
+	Efx.create_effect("FireExplosion", global_position, Vector2(2, 2))
 	queue_free()
 
 func on_attackone_animation_finished():

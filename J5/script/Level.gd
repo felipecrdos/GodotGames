@@ -11,7 +11,7 @@ export (PackedScene) var chest_packedscene
 
 var actor_container
 var pickup_container
-var triggerable_container
+var trigger_container
 
 var map_actor16
 var map_actor32
@@ -21,7 +21,7 @@ var maps_to_actors
 func _ready():	
 	actor_container 		= $ActorsContainer
 	pickup_container 		= $PickupContainer
-	triggerable_container	= $TriggerableContainer
+	trigger_container	= $TriggerContainer
 	
 	map_actor16 	= $ActorMap16
 	map_actor32 	= $ActorMap32

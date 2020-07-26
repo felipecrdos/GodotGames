@@ -1,6 +1,13 @@
 extends Node
+	
+# Achar qualquer nó pelo nome. Não importa o nível de recursividade
+func fnode(node:String):
+	var fnode = null
+	for n in get_tree().get_root().get_children():
+		fnode = n.find_node(node, true, false)
+	return fnode
 
-# Escolher um dos valores do array passado
+# Retorna um dos valores contidos no array passado
 func choose(array : Array):
 	if array:
 		randomize()
@@ -8,14 +15,6 @@ func choose(array : Array):
 		var index = randi()%size
 		return array[index]
 	return null	
-
-# Abilitar monitoramente da área no frame específico.
-func enable_monitoring_area_in_frame(area:Area2D ,animation:AnimatedSprite, frame:int):
-	if frame >= 0:
-		if animation.frame == frame && !area.monitoring:
-			area.set_deferred("monitoring", true)
-		yield(animation, "animation_finished")
-		area.set_deferred("monitoring", false)
 
 # Desabilitar as áreas dos filhos de um node.
 func disable_all_child_area(parent : Node2D):
@@ -29,13 +28,15 @@ func enable_all_child_area(parent : Node2D):
 		if child is Area2D:
 			child.set_deferred("monitoring", true)
 
+# Verificar se uma Area2D se sobrepôs a um body específico
 func check_area_collision(area: Area2D, body: Node):
 	var is_colliding = false
 	if area && body:
 		if area.overlaps_body(body):
 			is_colliding = true
 	return is_colliding
-
+	
+# Verificar se uma Area2D se sobrepôs a qualquer body
 func check_area_collisions(area: Area2D):
 	var is_colliding = false
 	for body in area.get_overlapping_bodies():
@@ -43,7 +44,7 @@ func check_area_collisions(area: Area2D):
 		is_colliding = true
 	return is_colliding
 
-# Retorna a direção horizontal
+# Retorna a direção horizontal em relação ao alvo
 func target_hdirect(target, this):
 	var posx = this.global_position.x
 	var tposx = target.global_position.x
