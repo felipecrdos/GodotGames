@@ -104,10 +104,10 @@ func attack_state(delta):
 		direction.x = sign(target.global_position.x - global_position.x)
 	if $ASprite.frame == frame_attack:
 		if Util.check_area_collision($ASprite/HitBoxArea, Global.player):
-			var tdir = Util.target_hdirect(Global.player, self)
+			var tdir = Util.hdirect(self, Global.player)
 			Global.player.pushback = float(attack_force * tdir)
 			Global.player.health -= attack_damage
-			print(Global.player.health)
+			Global.sound.play_sfx("hit2")
 			$ASprite/HitBoxArea.set_deferred("monitoring", false)
 			
 	yield($ASprite, "animation_finished")
@@ -152,10 +152,12 @@ func bodyarea_collision():
 		if Util.check_area_collision($BodyArea, Global.player):
 			Global.player.pushback = float(attack_force * face)
 			Global.player.health -= attack_damage
+			Global.sound.play_sfx("hit2")
 			$BodyArea.set_deferred("monitoring", false)
 		elif state != State.ATTACK: 
 			$BodyArea.set_deferred("monitoring", true)
 	
 func destroy():
 	Efx.create_effect("SmokeExplosion",global_position, Vector2(2, 2))
+	Global.sound.play_sfx("balloon_pop")
 	queue_free()

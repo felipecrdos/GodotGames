@@ -6,183 +6,183 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 14 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=41]
 atlas = ExtResource( 5 )
-region = Rect2( 128, 160, 64, 32 )
+region = Rect2( 192, 192, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=42]
 atlas = ExtResource( 5 )
-region = Rect2( 192, 160, 64, 32 )
+region = Rect2( 128, 192, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=43]
 atlas = ExtResource( 5 )
-region = Rect2( 256, 160, 64, 32 )
+region = Rect2( 64, 192, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=44]
 atlas = ExtResource( 5 )
-region = Rect2( 320, 160, 64, 32 )
+region = Rect2( 0, 192, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=45]
 atlas = ExtResource( 5 )
-region = Rect2( 384, 160, 64, 32 )
+region = Rect2( 576, 160, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=46]
 atlas = ExtResource( 5 )
-region = Rect2( 448, 160, 64, 32 )
+region = Rect2( 512, 160, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 5 )
-region = Rect2( 512, 160, 64, 32 )
+region = Rect2( 0, 160, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 5 )
-region = Rect2( 576, 160, 64, 32 )
+region = Rect2( 64, 160, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 5 )
-region = Rect2( 0, 192, 64, 32 )
+region = Rect2( 64, 160, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 5 )
-region = Rect2( 64, 192, 64, 32 )
+region = Rect2( 128, 128, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 5 )
-region = Rect2( 128, 192, 64, 32 )
+region = Rect2( 192, 128, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 5 )
-region = Rect2( 192, 192, 64, 32 )
+region = Rect2( 256, 128, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 5 )
-region = Rect2( 512, 160, 64, 32 )
+region = Rect2( 320, 128, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 5 )
-region = Rect2( 576, 160, 64, 32 )
+region = Rect2( 384, 128, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 5 )
-region = Rect2( 0, 192, 64, 32 )
+region = Rect2( 448, 128, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=17]
 atlas = ExtResource( 5 )
-region = Rect2( 64, 192, 64, 32 )
+region = Rect2( 512, 128, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 5 )
-region = Rect2( 128, 192, 64, 32 )
-
-[sub_resource type="AtlasTexture" id=19]
+[sub_resource type="AtlasTexture" id=47]
 atlas = ExtResource( 5 )
 region = Rect2( 192, 192, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=20]
+[sub_resource type="AtlasTexture" id=48]
 atlas = ExtResource( 5 )
-region = Rect2( 128, 128, 64, 32 )
+region = Rect2( 128, 192, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=21]
+[sub_resource type="AtlasTexture" id=49]
 atlas = ExtResource( 5 )
-region = Rect2( 192, 128, 64, 32 )
+region = Rect2( 64, 192, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=22]
+[sub_resource type="AtlasTexture" id=50]
 atlas = ExtResource( 5 )
-region = Rect2( 256, 128, 64, 32 )
+region = Rect2( 0, 192, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=23]
+[sub_resource type="AtlasTexture" id=51]
 atlas = ExtResource( 5 )
-region = Rect2( 320, 128, 64, 32 )
+region = Rect2( 576, 160, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=24]
+[sub_resource type="AtlasTexture" id=52]
 atlas = ExtResource( 5 )
-region = Rect2( 384, 128, 64, 32 )
+region = Rect2( 512, 160, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=25]
+[sub_resource type="AtlasTexture" id=53]
 atlas = ExtResource( 5 )
-region = Rect2( 448, 128, 64, 32 )
+region = Rect2( 448, 160, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=26]
+[sub_resource type="AtlasTexture" id=54]
 atlas = ExtResource( 5 )
-region = Rect2( 512, 128, 64, 32 )
+region = Rect2( 384, 160, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=27]
+[sub_resource type="AtlasTexture" id=55]
 atlas = ExtResource( 5 )
-region = Rect2( 256, 192, 64, 32 )
+region = Rect2( 320, 160, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=28]
+[sub_resource type="AtlasTexture" id=56]
 atlas = ExtResource( 5 )
-region = Rect2( 320, 192, 64, 32 )
+region = Rect2( 256, 160, 64, 32 )
 
-[sub_resource type="AtlasTexture" id=29]
+[sub_resource type="AtlasTexture" id=57]
 atlas = ExtResource( 5 )
-region = Rect2( 384, 192, 64, 32 )
+region = Rect2( 192, 160, 64, 32 )
+
+[sub_resource type="AtlasTexture" id=58]
+atlas = ExtResource( 5 )
+region = Rect2( 128, 160, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=30]
 atlas = ExtResource( 5 )
-region = Rect2( 448, 192, 64, 32 )
+region = Rect2( 256, 192, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=31]
 atlas = ExtResource( 5 )
-region = Rect2( 512, 192, 64, 32 )
+region = Rect2( 320, 192, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=32]
 atlas = ExtResource( 5 )
-region = Rect2( 576, 192, 64, 32 )
+region = Rect2( 384, 192, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=33]
 atlas = ExtResource( 5 )
-region = Rect2( 64, 160, 64, 32 )
+region = Rect2( 448, 192, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=34]
 atlas = ExtResource( 5 )
-region = Rect2( 64, 160, 64, 32 )
+region = Rect2( 512, 192, 64, 32 )
 
 [sub_resource type="AtlasTexture" id=35]
 atlas = ExtResource( 5 )
-region = Rect2( 0, 160, 64, 32 )
+region = Rect2( 576, 192, 64, 32 )
 
 [sub_resource type="SpriteFrames" id=36]
 animations = [ {
+"frames": [ SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ) ],
+"loop": true,
+"name": "Running",
+"speed": 10.0
+}, {
 "frames": [  ],
 "loop": true,
 "name": "Jumping",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
-"loop": true,
-"name": "Walking",
-"speed": 5.0
+"frames": [ SubResource( 8 ) ],
+"loop": false,
+"name": "Falling",
+"speed": 1.0
 }, {
-"frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
-"loop": true,
-"name": "Running",
-"speed": 10.0
-}, {
-"frames": [ SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ) ],
-"loop": true,
-"name": "Attacking",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 33 ) ],
+"frames": [ SubResource( 9 ) ],
 "loop": false,
 "name": "Hurt",
 "speed": 4.0
 }, {
-"frames": [ SubResource( 34 ) ],
+"frames": [ SubResource( 10 ) ],
 "loop": false,
 "name": "Dying",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 35 ) ],
-"loop": false,
-"name": "Falling",
-"speed": 1.0
+"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ) ],
+"loop": true,
+"name": "Walking",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ) ],
+"loop": true,
+"name": "Attacking",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=37]
@@ -211,7 +211,8 @@ shape = SubResource( 1 )
 
 [node name="ASprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 36 )
-animation = "Running"
+animation = "Walking"
+frame = 2
 
 [node name="HitBoxArea" type="Area2D" parent="ASprite"]
 position = Vector2( 20, 10 )

@@ -45,7 +45,7 @@ func check_area_collisions(area: Area2D):
 	return is_colliding
 
 # Retorna a direção horizontal em relação ao alvo
-func target_hdirect(target, this):
-	var posx = this.global_position.x
-	var tposx = target.global_position.x
-	return  sign(tposx - posx)
+func hdirect(from, to):
+	var frompos = from.global_position.x
+	var topos = to.global_position.x
+	return sign(topos - frompos)

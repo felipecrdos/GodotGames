@@ -148,6 +148,9 @@ shape = SubResource( 16 )
 [node name="PoseTimer" type="Timer" parent="."]
 wait_time = 8.0
 autostart = true
+
+[node name="FootDust" type="Position2D" parent="."]
+position = Vector2( -10, 6 )
 [connection signal="animation_finished" from="AttackOne/ASprite" to="." method="on_attackone_animation_finished"]
 [connection signal="animation_finished" from="AttackTwo/ASprite" to="." method="on_attacktwo_animation_finished"]
 [connection signal="animation_finished" from="AttackThree/ASprite" to="." method="on_attackthree_animation_finished"]
