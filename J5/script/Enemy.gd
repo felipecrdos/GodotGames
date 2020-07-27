@@ -18,6 +18,7 @@ var attack_damage
 var attack_force
 var target
 var max_health
+var sposition
 var face
 var health setget set_health
 

@@ -1,5 +1,5 @@
 extends TextureButton
-export (PackedScene) var scene
+export (String, FILE) var scene
 signal send_scene(scene)
 
 func _ready():

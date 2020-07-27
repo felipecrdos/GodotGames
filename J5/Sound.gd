@@ -2,7 +2,7 @@ extends Node2D
  
 onready var bus_layout = preload("res://resouce/bus.tres")
 func _ready():
-	Global.sound = self
+	#Global.sound = self
 	AudioServer.set_bus_layout(bus_layout)
 	set_bus_volume("sfx", -10)
 	

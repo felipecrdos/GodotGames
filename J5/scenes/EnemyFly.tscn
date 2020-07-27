@@ -1,0 +1,136 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://script/EnemyFly.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprite/CharTilesheet32x32.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6, 8 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 2 )
+region = Rect2( 224, 544, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 2 )
+region = Rect2( 256, 544, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 2 )
+region = Rect2( 288, 544, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=46]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=47]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 576, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=48]
+atlas = ExtResource( 2 )
+region = Rect2( 224, 544, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=49]
+atlas = ExtResource( 2 )
+region = Rect2( 256, 544, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=50]
+atlas = ExtResource( 2 )
+region = Rect2( 288, 544, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=51]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 576, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=36]
+animations = [ {
+"frames": [ SubResource( 41 ) ],
+"loop": true,
+"name": "Attacking",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 47 ) ],
+"loop": false,
+"name": "Hurt",
+"speed": 4.0
+}, {
+"frames": [ SubResource( 42 ) ],
+"loop": false,
+"name": "Dying",
+"speed": 4.0
+}, {
+"frames": [ SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ) ],
+"loop": true,
+"name": "Flying",
+"speed": 10.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=37]
+extents = Vector2( 5, 5 )
+
+[sub_resource type="RectangleShape2D" id=38]
+
+[sub_resource type="CircleShape2D" id=39]
+radius = 80.0
+
+[sub_resource type="CircleShape2D" id=40]
+radius = 30.0
+
+[node name="EnemyFly" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="ASprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 36 )
+animation = "Attacking"
+
+[node name="HitBoxArea" type="Area2D" parent="ASprite"]
+position = Vector2( 8, 12 )
+collision_layer = 0
+
+[node name="Shape" type="CollisionShape2D" parent="ASprite/HitBoxArea"]
+shape = SubResource( 37 )
+
+[node name="BodyArea" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Shape" type="CollisionShape2D" parent="BodyArea"]
+position = Vector2( 0, 2 )
+shape = SubResource( 38 )
+
+[node name="ChaseArea" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Shape" type="CollisionShape2D" parent="ChaseArea"]
+shape = SubResource( 39 )
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Shape" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource( 40 )
+
+[node name="ChangeStateTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+[connection signal="timeout" from="ChangeStateTimer" to="." method="on_change_state_timeout"]

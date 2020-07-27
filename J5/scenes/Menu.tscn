@@ -21,6 +21,7 @@ __meta__ = {
 [node name="Start" parent="VContainer" instance=ExtResource( 2 )]
 margin_top = 50.0
 margin_bottom = 70.0
+scene = "res://scenes/Level.tscn"
 
 [node name="Option" parent="VContainer" instance=ExtResource( 2 )]
 margin_top = 80.0
@@ -29,3 +30,4 @@ margin_bottom = 100.0
 [node name="Quit" parent="VContainer" instance=ExtResource( 2 )]
 margin_top = 110.0
 margin_bottom = 130.0
+[connection signal="send_scene" from="VContainer/Start" to="." method="on_start_send_scene"]

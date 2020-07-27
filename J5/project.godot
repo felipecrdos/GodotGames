@@ -30,6 +30,11 @@ _global_script_classes=[ {
 "path": "res://script/Enemy.gd"
 }, {
 "base": "Enemy",
+"class": "EnemyFly",
+"language": "GDScript",
+"path": "res://script/EnemyFly.gd"
+}, {
+"base": "Enemy",
 "class": "EnemyPatrol",
 "language": "GDScript",
 "path": "res://script/EnemyPatrol.gd"
@@ -44,6 +49,7 @@ _global_script_class_icons={
 "Bear": "",
 "Effect": "",
 "Enemy": "",
+"EnemyFly": "",
 "EnemyPatrol": "",
 "Orc": ""
 }
@@ -63,6 +69,7 @@ default_bus_layout=""
 Global="*res://Global.gd"
 Util="*res://Util.gd"
 Efx="*res://Efx.gd"
+Sound="*res://Sound.tscn"
 
 [display]
 

@@ -4,6 +4,7 @@ export (PackedScene) var player_packedscene
 export (PackedScene) var orc_packedscene
 export (PackedScene) var alligator_packedscene
 export (PackedScene) var bear_packedscene
+export (PackedScene) var scotty_packedscene
 
 export (PackedScene) var portal_packedscene
 export (PackedScene) var coin_packedscene
@@ -19,8 +20,8 @@ var map_actor64
 var maps_to_actors
 
 func _ready():	
-	actor_container 		= $ActorsContainer
-	pickup_container 		= $PickupContainer
+	actor_container 	= $ActorsContainer
+	pickup_container 	= $PickupContainer
 	trigger_container	= $TriggerContainer
 	
 	map_actor16 	= $ActorMap16
@@ -30,7 +31,8 @@ func _ready():
 	maps_to_actors = {	map_actor16:[	{"type":0, "name":"Player","index":-1, "packed":player_packedscene,"parent":actor_container, "offset":Vector2.ZERO},
 										{"type":0, "name":"Enemy","index":-1, "packed":0,"parent":actor_container, "offset":Vector2.ZERO}],
 						map_actor32:[	{"type":0, "name":"Player","index":-1, "packed":player_packedscene,"parent":actor_container, "offset":Vector2.ZERO},
-										{"type":0, "name":"Alligator","index":-1, "packed":alligator_packedscene,"parent":actor_container, "offset":Vector2.ZERO}],
+										{"type":0, "name":"Alligator","index":-1, "packed":alligator_packedscene,"parent":actor_container, "offset":Vector2.ZERO},
+										{"type":0, "name":"Scotty","index":-1, "packed":scotty_packedscene,"parent":actor_container, "offset":Vector2.ZERO}],
 						map_actor64:[	{"type":0, "name":"Orc","index":-1, "packed":orc_packedscene,"parent":actor_container, "offset":Vector2.ZERO},
 										{"type":0, "name":"Bear","index":-1, "packed":bear_packedscene,"parent":actor_container, "offset":Vector2.ZERO}]}
 	find_objects_indexes()
@@ -61,6 +63,8 @@ func instantiate_objects(g_position, packedscene, parent, offset):
 	parent.add_child(new_object)
 	new_object.global_position = g_position
 	new_object.global_position += offset
+	if new_object is Enemy:
+		new_object.sposition = new_object.global_position
 
 func remove_cell(map, coord):
 	map.set_cellv(coord, -1)

@@ -152,7 +152,7 @@ func jumping_state(delta):
 	$ASprite.play("Jumping")
 	if can_jump:
 		can_jump = false
-		Global.sound.play_sfx("player_jump")
+		Sound.play_sfx("player_jump")
 		velocity.y = jump_force.y
 	if velocity.y > 0:
 		state = State.FALLING
@@ -219,7 +219,7 @@ func attacking_one():
 					if body is Enemy:
 						body.pushback = attack_force * face
 						body.health -= attack_damage
-						Global.sound.play_sfx("hit1")
+						Sound.play_sfx("hit1")
 					$AttackOne.set_deferred("monitoring", false)
 
 	elif !is_attacking[Attack.ATTACK_ONE]:
@@ -238,7 +238,7 @@ func attacking_two():
 						var tdir = Util.hdirect(self, body)
 						body.pushback = float(attack_force * tdir)
 						body.health -= attack_damage
-						Global.sound.play_sfx("hit1")
+						Sound.play_sfx("hit1")
 					$AttackTwo.set_deferred("monitoring", false)
 	elif !is_attacking[Attack.ATTACK_TWO]:
 		$AttackTwo/ASprite.visible = false
@@ -255,7 +255,7 @@ func attacking_three():
 					if body is Enemy:
 						body.pushback = 100 * face
 						body.health -= attack_damage
-						Global.sound.play_sfx("hit1")
+						Sound.play_sfx("hit1")
 					$AttackThree.set_deferred("monitoring", false)
 	
 	elif !is_attacking[Attack.ATTACK_THREE]:

@@ -1,21 +1,21 @@
 extends Enemy
-class_name EnemyPatrol
+class_name EnemyFly
 
-enum State {IDLE, WALK, RUNNING, JUMPING, FALLING, 
-			CHASE, ATTACK, HURT, DYING}
+enum State {IDLE, HOME, FLYING, CHASE, ATTACK, HURT, DYING}
 enum Func {AI, HMOVE, VMOVE, LIMIT}
+var angle
+var time
+var radius
+
 func _ready():
-	funcs_names = [	"idle_state", "walk_state", "running_state",
-					"jumping_state", "falling_state", "chase_state",
+	funcs_names = [	"idle_state", "home_state", "flying_state", "chase_state" ,
 					"attack_state", "hurt_state", "dying_state"]
 					
 	funcs_masks = {	State.IDLE		:[true, false, true],
-					State.WALK		:[true, true, true],
-					State.RUNNING	:[true, true, true],
-					State.JUMPING	:[true, true, true],
-					State.FALLING	:[true, true, true],
+					State.HOME		:[true, true, true],
+					State.FLYING	:[true, true, true],
 					State.CHASE		:[true, true, true],
-					State.ATTACK	:[true, false, false],
+					State.ATTACK	:[true, false, true],
 					State.HURT		:[false, false, true],
 					State.DYING		:[false, false, false]}
 
@@ -24,22 +24,27 @@ func _ready():
 	run_speed 	= 22
 	attack_damage = 2
 	frame_attack = 3
-	gravity		 = 20.0
+	angle		 = 0
+	radius		 = 30
+	hspeed		 = 10
+	vspeed		 = 1
+	time = 1
 	
 	set_funcs_refs()
 
 func _physics_process(delta):
-	if funcs_masks[state][Func.AI]:ai()
-	if funcs_masks[state][Func.HMOVE]:hmove()
+	if funcs_masks[state][Func.AI]:ai(delta)
+	if funcs_masks[state][Func.HMOVE]:hmove(delta)
 	else: velocity.x = 0
-	if funcs_masks[state][Func.VMOVE]:vmove()
+	if funcs_masks[state][Func.VMOVE]:vmove(delta)
 	else: velocity.y = 0
 	
 	funcs_refs[state].call_func(delta)
 	bodyarea_collision()
-	move()
+	update_angle(delta)
+	move(delta)
 
-func ai():
+func ai(delta):
 	if direction.x > 0:
 		face = direction.x
 		$ASprite.flip_h = false
@@ -50,54 +55,67 @@ func ai():
 		$ASprite/HitBoxArea.position.x = -abs($ASprite/HitBoxArea.position.x)
 	face = -1 if $ASprite.flip_h else 1
 	
-func hmove():
+func hmove(delta):
 	velocity.x = direction.x * hspeed
 
-func vmove():
-	velocity.y += gravity * vspeed
+func vmove(delta):
+	velocity.y = (sin(angle) * radius * delta) + position.y
+	velocity.y += direction.y * vspeed
+
+func update_angle(delta):
+	angle += (2*PI * delta) / time
+	angle = wrapf(angle, -PI, PI)
 	
-func move():
-	velocity = move_and_slide(velocity, Vector2.UP)
+func move(delta):
+	position.x += velocity.x * delta
+	position.y = velocity.y
 
 func idle_state(delta):
 	$ASprite.play("Idle")
 	if Util.check_area_collision($ChaseArea, Global.player):
 		state = State.CHASE
-		
-func walk_state(delta):
-	$ASprite.play("Walking")
-	hspeed = walk_speed
+	direction.y = 0
+
+func home_state(delta):
+	$ASprite.play("Flying")
 	if Util.check_area_collision($ChaseArea, Global.player):
 		state = State.CHASE
-		
-	if is_on_wall():
+	
+	var distx = sposition.x - global_position.x
+	var disty = sposition.y - global_position.y
+	if abs(distx) > 10:
+		direction.x = sign(distx)
+	else: direction.x = 0
+	if abs(disty) > 10:
+		direction.y = sign(disty)
+	else: direction.y = 0
+	if !direction.x && !direction.y:
 		state = State.IDLE
-		
-func running_state(delta):
-	$ASprite.play("Running")
-	hspeed = run_speed
+	
+
+func flying_state(delta):
+	$ASprite.play("Flying")
 	if Util.check_area_collision($ChaseArea, Global.player):
 		state = State.CHASE
-		
-	if is_on_wall():
-		state = State.IDLE
-
-func jumping_state(delta):
-	$ASprite.play("Jumping")
-
-func falling_state(delta):
-	$ASprite.play("Falling")
 	
 func chase_state(delta):
-	$ASprite.play("Running")
+	$ASprite.play("Flying")
 	hspeed = run_speed
 	if Util.check_area_collision($AttackArea, Global.player):
 		state = State.ATTACK
 	if !Util.check_area_collision($ChaseArea, Global.player) || !Global.player:
-		state = State.IDLE
-	if Global.player:
-		direction.x = sign(target.global_position.x - global_position.x)
+		state = State.HOME
+		$ChangeStateTimer.start()
 		
+	if Global.player:
+		var distx = Global.player.global_position.x - global_position.x
+		var disty = Global.player.global_position.y - global_position.y
+		if abs(distx) > 1:
+			direction.x = sign(distx)
+		if disty > 25:
+			direction.y = sign(disty)
+		else: direction.y = 0
+
 func attack_state(delta):
 	$ASprite.play("Attacking")
 	if Global.player:
@@ -114,7 +132,7 @@ func attack_state(delta):
 	$ASprite/HitBoxArea.set_deferred("monitoring", true)
 	
 	if !Util.check_area_collision($AttackArea, Global.player) || !Global.player:
-		state = State.IDLE
+		state = State.CHASE
 	
 func hurt_state(delta):
 	if health > 0:
@@ -135,8 +153,8 @@ func dying_state(delta):
 func on_change_state_timeout():
 	randomize()
 	match state:
-		State.IDLE, State.WALK, State.RUNNING:
-			var states = [State.IDLE,State.WALK,State.RUNNING]
+		State.IDLE, State.FLYING, State.HOME:
+			var states = [State.IDLE, State.FLYING, State.HOME]
 			var size = states.size()
 			var index = randi()%size
 			state = states[index]
@@ -145,7 +163,6 @@ func on_change_state_timeout():
 func set_health(value):
 	health = value
 	state = State.HURT
-
 
 func bodyarea_collision():
 	if state != State.HURT && Global.player:
@@ -161,3 +178,4 @@ func destroy():
 	Efx.create_effect("SmokeExplosion",global_position, Vector2(2, 2))
 	Sound.play_sfx("balloon_pop")
 	queue_free()
+
