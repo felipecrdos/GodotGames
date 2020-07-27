@@ -6,29 +6,30 @@ enum Func {AI, HMOVE, VMOVE, LIMIT}
 var angle
 var time
 var radius
-
+var slow_fly
+var fast_fly
 func _ready():
 	funcs_names = [	"idle_state", "home_state", "flying_state", "chase_state" ,
 					"attack_state", "hurt_state", "dying_state"]
 					
-	funcs_masks = {	State.IDLE		:[true, false, true],
-					State.HOME		:[true, true, true],
-					State.FLYING	:[true, true, true],
-					State.CHASE		:[true, true, true],
-					State.ATTACK	:[true, false, true],
-					State.HURT		:[false, false, true],
-					State.DYING		:[false, false, false]}
+	funcs_masks = {	State.IDLE		  :[true, false, true],
+					State.HOME		  :[true, true, true],
+					State.FLYING	  :[true, true, true],
+					State.CHASE		  :[true, true, true],
+					State.ATTACK	  :[true, false, true],
+					State.HURT		  :[false, false, true],
+					State.DYING		  :[false, false, false]}
 
-	state 		= State.IDLE
-	walk_speed 	= 14
-	run_speed 	= 22
+	state 		  = State.IDLE
 	attack_damage = 2
 	frame_attack = 3
+	slow_fly 	 = 14
+	fast_fly 	 = 24
 	angle		 = 0
 	radius		 = 30
 	hspeed		 = 10
 	vspeed		 = 1
-	time = 1
+	time 		 = 1
 	
 	set_funcs_refs()
 
@@ -100,26 +101,28 @@ func flying_state(delta):
 	
 func chase_state(delta):
 	$ASprite.play("Flying")
-	hspeed = run_speed
 	if Util.check_area_collision($AttackArea, Global.player):
 		state = State.ATTACK
 	if !Util.check_area_collision($ChaseArea, Global.player) || !Global.player:
 		state = State.HOME
+		hspeed = slow_fly
 		$ChangeStateTimer.start()
-		
+	hspeed = fast_fly
 	if Global.player:
-		var distx = Global.player.global_position.x - global_position.x
-		var disty = Global.player.global_position.y - global_position.y
-		if abs(distx) > 1:
-			direction.x = sign(distx)
-		if disty > 25:
-			direction.y = sign(disty)
-		else: direction.y = 0
+		var dist = Global.player.global_position - global_position
+		if abs(dist.x) > 1:
+			direction.x = sign(dist.x)
+		else:
+			direction.x = 0
+		if dist.y > 25:
+			direction.y = sign(dist.y)
+		else: 
+			direction.y = 0
 
 func attack_state(delta):
 	$ASprite.play("Attacking")
 	if Global.player:
-		direction.x = sign(target.global_position.x - global_position.x)
+		direction.x = sign(Global.player.global_position.x - global_position.x)
 	if $ASprite.frame == frame_attack:
 		if Util.check_area_collision($ASprite/HitBoxArea, Global.player):
 			var tdir = Util.hdirect(self, Global.player)
@@ -149,7 +152,7 @@ func dying_state(delta):
 	$ASprite.play("Dying")
 	yield($ASprite, "animation_finished")
 	destroy()
-		
+	
 func on_change_state_timeout():
 	randomize()
 	match state:

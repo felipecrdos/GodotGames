@@ -149,9 +149,14 @@ shape = SubResource( 16 )
 wait_time = 8.0
 autostart = true
 
+[node name="VulnTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [node name="FootDust" type="Position2D" parent="."]
 position = Vector2( -10, 6 )
 [connection signal="animation_finished" from="AttackOne/ASprite" to="." method="on_attackone_animation_finished"]
 [connection signal="animation_finished" from="AttackTwo/ASprite" to="." method="on_attacktwo_animation_finished"]
 [connection signal="animation_finished" from="AttackThree/ASprite" to="." method="on_attackthree_animation_finished"]
 [connection signal="timeout" from="PoseTimer" to="." method="on_pose_timer_timeout"]
+[connection signal="timeout" from="VulnTimer" to="." method="on_vulntimer_timeout"]

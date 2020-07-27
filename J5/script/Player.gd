@@ -25,6 +25,7 @@ var can_attacking
 var attack_damage
 var attack_force
 var is_attacking : Array
+var invulnerable
 
 var max_health
 var health setget set_health
@@ -61,6 +62,7 @@ func _ready():
 	attack_damage = 1
 	attack_force = 300
 	pushback = 100
+	invulnerable = false
 	
 	poses_names = [	"Laughing", 
 					"Around",
@@ -92,8 +94,14 @@ func _physics_process(delta):
 	
 	move()
 	update_attack()
+	update_visible(delta)
 	funcs_refs[state].call_func(delta)
-
+	
+func update_visible(delta):
+	if invulnerable:
+		$ASprite.modulate.a += delta * 4
+		$ASprite.modulate.a  = wrapf($ASprite.modulate.a , 0, 1)
+	
 func input():
 	direction.x = 0
 	if Input.is_action_pressed("ui_right"):
@@ -270,11 +278,14 @@ func on_pose_timer_timeout():
 		pose_name = poses_names[index]
 
 func set_health(value):
-	health = value
-	velocity.x = 0
-	velocity.y = 0
-	if state != State.DYING:
-		state = State.HURT
+	if !invulnerable:
+		health = value
+		velocity.x = 0
+		velocity.y = 0
+		if state != State.DYING:
+			$VulnTimer.start()
+			state = State.HURT
+			invulnerable = true
 
 func destroy():
 	Efx.create_effect("FireExplosion", global_position, Vector2(2, 2))
@@ -286,3 +297,7 @@ func on_attacktwo_animation_finished():
 	$AttackTwo.set_deferred("monitoring", true)
 func on_attackthree_animation_finished():
 	$AttackThree.set_deferred("monitoring", true)
+
+func on_vulntimer_timeout():
+	invulnerable = false
+	$ASprite.modulate.a = 1

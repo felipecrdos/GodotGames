@@ -3,11 +3,8 @@ class_name Enemy
 
 var velocity
 var direction
-var walk_speed
-var run_speed
 var frame_attack
 var pushback
-var gravity
 var vspeed
 var hspeed
 var state
@@ -16,7 +13,6 @@ var funcs_masks
 var funcs_refs
 var attack_damage
 var attack_force
-var target
 var max_health
 var sposition
 var face
@@ -25,17 +21,13 @@ var health setget set_health
 func _ready():
 	velocity  	= Vector2.ZERO
 	direction 	= Vector2.ZERO
-	walk_speed 	= 8 
-	run_speed 	= 16
-	gravity		= 0
 	max_health 	= 10
 	frame_attack = 0
 	attack_force = 100
 	vspeed		= 1
+	hspeed		= 8
 	pushback = 10
-	hspeed		= walk_speed
 	health 		= max_health
-	target		= Global.player
 	funcs_refs = []
 	
 func set_health(value):

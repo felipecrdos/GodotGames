@@ -4,6 +4,11 @@ class_name EnemyPatrol
 enum State {IDLE, WALK, RUNNING, JUMPING, FALLING, 
 			CHASE, ATTACK, HURT, DYING}
 enum Func {AI, HMOVE, VMOVE, LIMIT}
+
+var walk_speed
+var run_speed
+var gravity
+
 func _ready():
 	funcs_names = [	"idle_state", "walk_state", "running_state",
 					"jumping_state", "falling_state", "chase_state",
@@ -96,12 +101,12 @@ func chase_state(delta):
 	if !Util.check_area_collision($ChaseArea, Global.player) || !Global.player:
 		state = State.IDLE
 	if Global.player:
-		direction.x = sign(target.global_position.x - global_position.x)
+		direction.x = sign(Global.player.global_position.x - global_position.x)
 		
 func attack_state(delta):
 	$ASprite.play("Attacking")
 	if Global.player:
-		direction.x = sign(target.global_position.x - global_position.x)
+		direction.x = sign(Global.player.global_position.x - global_position.x)
 	if $ASprite.frame == frame_attack:
 		if Util.check_area_collision($ASprite/HitBoxArea, Global.player):
 			var tdir = Util.hdirect(self, Global.player)
