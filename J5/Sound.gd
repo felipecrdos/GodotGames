@@ -37,5 +37,4 @@ func resume_music(audio:String):
 
 # Definir o volume dos audios no "Bus" especificado
 func set_bus_volume(bus:String, volume:float):
-	print(AudioServer.get_bus_index(bus))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(bus),volume)

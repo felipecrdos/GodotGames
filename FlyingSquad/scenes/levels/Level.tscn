@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/levels/BGScroll.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/sprite/environment/bg_cloud_two.png" type="Texture" id=2]
+[ext_resource path="res://scenes/player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sprite/environment/bg_cloud_one.png" type="Texture" id=4]
+
+[node name="Level" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="BGCloudOne" parent="Background" instance=ExtResource( 1 )]
+texture = ExtResource( 4 )
+centered = false
+speed = Vector2( 0, 2 )
+delay = Vector2( 1, 1 )
+
+[node name="BGCloudTwo" parent="Background" instance=ExtResource( 1 )]
+texture = ExtResource( 2 )
+centered = false
+speed = Vector2( 0, 3 )
+delay = Vector2( 1, 1 )
+
+[node name="AmmoContainer" type="Node2D" parent="."]
+
+[node name="ActorContainer" type="Node2D" parent="."]
+
+[node name="Player" parent="ActorContainer" instance=ExtResource( 3 )]
+
+[node name="PickupContainer" type="Node2D" parent="."]
