@@ -53,6 +53,9 @@ func input():
 	if Input.is_action_pressed("ui_accept"):
 		$LeftWeapon.shoot(Vector2.UP, Vector2(0, 400))
 		$RightWeapon.shoot(Vector2.UP, Vector2(0, 400))
+	if Input.is_key_pressed(KEY_1):
+		Cam.shake(10, 60)
+		
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
 
