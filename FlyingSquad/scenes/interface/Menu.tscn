@@ -25,5 +25,6 @@ scene = "res://scenes/levels/Level.tscn"
 [node name="Quit" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 92.0
 margin_bottom = 112.0
+scene = "res://scenes/World.tscn"
 [connection signal="send_scene" from="VBoxContainer/Start" to="." method="on_start_send_scene"]
 [connection signal="send_scene" from="VBoxContainer/Quit" to="." method="on_quit_send_scene"]

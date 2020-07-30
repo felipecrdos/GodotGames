@@ -9,8 +9,10 @@ func choose(values:Array):
 	return -1
 
 func findnode(node:String):
-	var rt = get_tree().get_root()
-	for n in rt.get_children():
-		if n.has_node(node):
-			return n.find_node(node, true, false)
-	return null
+	var root = get_tree().get_root()
+	var find = null
+	for n in root.get_children():
+		find = n.find_node(node, true, false) 
+		if find:
+			break
+	return find

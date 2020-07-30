@@ -54,7 +54,9 @@ func input():
 		$LeftWeapon.shoot(Vector2.UP, Vector2(0, 400))
 		$RightWeapon.shoot(Vector2.UP, Vector2(0, 400))
 	if Input.is_key_pressed(KEY_1):
-		Cam.shake(10, 60)
+		#Global.findnode("SCamera")shake(10, 60)
+		print(Global.findnode("SCamera").name)
+		pass
 		
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
