@@ -20,7 +20,7 @@ __meta__ = {
 [node name="Start" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 68.0
 margin_bottom = 88.0
-scene = "res://scenes/levels/Level.tscn"
+scene = "res://scenes/World.tscn"
 
 [node name="Quit" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 92.0

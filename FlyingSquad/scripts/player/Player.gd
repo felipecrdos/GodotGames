@@ -11,6 +11,7 @@ var state
 var velocity 	: Vector2
 var direction   : Vector2
 var speed    	: Vector2
+var screen_size : Vector2
 
 func _ready():
 	funcs_names = [	"idle_state", "fly_state", 
@@ -28,6 +29,9 @@ func _ready():
 	velocity = Vector2.ZERO
 	direction= Vector2.ZERO
 	speed	 = Vector2(100, 100)
+	screen_size = get_viewport_rect().size
+	
+	Global.player = self
 
 func _physics_process(delta):
 	if funcs_mask[state][Func.INPUT]:
@@ -39,7 +43,8 @@ func _physics_process(delta):
 	if funcs_mask[state][Func.MOVE]:
 		move()
 	funcs_refs[state].call_func(delta)
-
+	set_limits()
+	
 func input():
 	direction = Vector2.ZERO
 	if Input.is_action_pressed("ui_right"):
@@ -53,10 +58,9 @@ func input():
 	if Input.is_action_pressed("ui_accept"):
 		$LeftWeapon.shoot(Vector2.UP, Vector2(0, 400))
 		$RightWeapon.shoot(Vector2.UP, Vector2(0, 400))
+		
 	if Input.is_key_pressed(KEY_1):
-		#Global.findnode("SCamera")shake(10, 60)
-		print(Global.findnode("SCamera").name)
-		pass
+		Global.findnode("MCamera").shake(10, 60)
 		
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
@@ -67,7 +71,10 @@ func vmove():
 	velocity.y = direction.y * speed.y
 func move():
 	velocity = move_and_slide(velocity, Vector2.UP)
-	
+func set_limits():
+	position.x = clamp(position.x, 0, screen_size.x)
+	position.y = clamp(position.y, 0, screen_size.y)
+
 func idle_state(delta):
 	$ASprite.play("idle")
 	

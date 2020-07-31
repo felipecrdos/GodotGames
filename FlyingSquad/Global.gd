@@ -2,6 +2,34 @@ extends Node
 
 var player
 
+# Save/Load game data
+var game_path = "user://game_data.json"
+var game_data = {	
+					"Player":{	"name":"Player", 
+								"health":10, 
+								"powerup":0, 
+								"Score":0
+							},
+					"Level":{	"path":"res://scenes/levels/Level.tscn",
+								"name":"Level", 
+								"difficulty":"Easy", 
+								"Boss":"RedRibbon"
+							}
+				}
+
+func save_data():
+	var file = File.new()
+	file.open(game_path, File.WRITE)
+	file.store_line(to_json(game_data))
+	file.close()
+	
+func load_data():
+	var file = File.new()
+	file.open(game_path, File.READ)
+	game_data = parse_json(file.get_as_text())
+	file.close()
+
+#===
 func choose(values:Array):
 	if !values.empty():
 		randomize()
