@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/interface/Transition.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/interface/Camera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/World.gd" type="Script" id=3]
 [ext_resource path="res://scenes/interface/TButton.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scripts/interface/Pause.gd" type="Script" id=5]
+[ext_resource path="res://assets/sprite/player/player_icon.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprite/player/player_health.png" type="Texture" id=7]
 
 [node name="World" type="Node"]
 script = ExtResource( 3 )
@@ -22,6 +24,92 @@ margin_right = 78.0
 margin_bottom = 180.0
 size_flags_horizontal = 3
 stretch = true
+
+[node name="VContainer" type="VBoxContainer" parent="HContainer/LeftScreen"]
+margin_right = 78.0
+margin_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TopVContainer" type="VBoxContainer" parent="HContainer/LeftScreen/VContainer"]
+margin_right = 78.0
+margin_bottom = 57.0
+size_flags_vertical = 3
+alignment = 1
+
+[node name="HContainer" type="HBoxContainer" parent="HContainer/LeftScreen/VContainer/TopVContainer"]
+margin_top = 10.0
+margin_right = 78.0
+margin_bottom = 28.0
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="HContainer/LeftScreen/VContainer/TopVContainer/HContainer"]
+margin_left = 30.0
+margin_right = 47.0
+margin_bottom = 18.0
+texture = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="HContainer/LeftScreen/VContainer/TopVContainer"]
+margin_top = 32.0
+margin_right = 78.0
+margin_bottom = 46.0
+text = "PLAYER"
+align = 1
+valign = 1
+
+[node name="MidleVContainer" type="VBoxContainer" parent="HContainer/LeftScreen/VContainer"]
+margin_top = 61.0
+margin_right = 78.0
+margin_bottom = 118.0
+size_flags_vertical = 3
+
+[node name="Lives" type="Label" parent="HContainer/LeftScreen/VContainer/MidleVContainer"]
+margin_right = 78.0
+margin_bottom = 26.0
+size_flags_vertical = 3
+text = "LIVES"
+align = 1
+valign = 2
+
+[node name="HContainer" type="HBoxContainer" parent="HContainer/LeftScreen/VContainer/MidleVContainer"]
+margin_top = 30.0
+margin_right = 78.0
+margin_bottom = 57.0
+size_flags_vertical = 3
+custom_constants/separation = 2
+
+[node name="L1" type="TextureRect" parent="HContainer/LeftScreen/VContainer/MidleVContainer/HContainer"]
+margin_right = 18.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+texture = ExtResource( 7 )
+
+[node name="L2" type="TextureRect" parent="HContainer/LeftScreen/VContainer/MidleVContainer/HContainer"]
+margin_left = 20.0
+margin_right = 38.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+texture = ExtResource( 7 )
+
+[node name="L3" type="TextureRect" parent="HContainer/LeftScreen/VContainer/MidleVContainer/HContainer"]
+margin_left = 40.0
+margin_right = 58.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+texture = ExtResource( 7 )
+
+[node name="L4" type="TextureRect" parent="HContainer/LeftScreen/VContainer/MidleVContainer/HContainer"]
+margin_left = 60.0
+margin_right = 78.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+texture = ExtResource( 7 )
+
+[node name="BottVContainer" type="VBoxContainer" parent="HContainer/LeftScreen/VContainer"]
+margin_top = 122.0
+margin_right = 78.0
+margin_bottom = 180.0
+size_flags_vertical = 3
 
 [node name="Viewport" type="Viewport" parent="HContainer/LeftScreen"]
 size = Vector2( 78, 180 )
