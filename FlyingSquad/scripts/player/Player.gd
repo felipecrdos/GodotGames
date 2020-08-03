@@ -6,6 +6,8 @@ enum Func {INPUT, HMOVE, VMOVE, MOVE}
 var funcs_names	: Array
 var funcs_refs 	: Array
 var funcs_mask 	: Dictionary
+var weapons		: Array
+var weapon_index: int
 var state
 
 var velocity 	: Vector2
@@ -25,7 +27,12 @@ func _ready():
 	for n in funcs_names:
 		funcs_refs.append(funcref(self, n))
 	
+	for child in get_children():
+		if child is Weapon:
+			weapons.append(child)
+
 	state = State.FLY
+	weapon_index = 0
 	velocity = Vector2.ZERO
 	direction= Vector2.ZERO
 	speed	 = Vector2(100, 100)
@@ -56,9 +63,8 @@ func input():
 	if Input.is_action_pressed("ui_up"):
 		direction.y = -1
 	if Input.is_action_pressed("ui_accept"):
-		$LeftWeapon.shoot(Vector2.UP, Vector2(0, 400))
-		$RightWeapon.shoot(Vector2.UP, Vector2(0, 400))
-		
+		weapons[weapon_index].shoot()
+
 	if Input.is_key_pressed(KEY_1):
 		Global.findnode("MCamera").shake(10, 60)
 		

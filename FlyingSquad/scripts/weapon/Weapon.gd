@@ -1,23 +1,21 @@
-extends Position2D
+extends Node2D
+class_name Weapon
 
-export (float) var fire_rate setget set_fire_rate
-export (PackedScene) var ammo setget set_ammo
-var start_fire_rate : float
-	
-func set_fire_rate(value:float):
-	if value >= 0:
-		fire_rate = value
-		start_fire_rate = fire_rate
+var firerate : float 
+var sfirerate : float
+var barrels : Array
 
-func set_ammo(value:PackedScene):
-	ammo = value
+func _ready():
+	firerate = 10
+	sfirerate = firerate
 	
-func shoot(dir:=Vector2.ZERO, speed:=Vector2.ZERO):
-	fire_rate -= 1
-	if fire_rate <= 0:
-		var new_ammo = ammo.instance()
-		new_ammo.set_deferred("direction", dir)
-		new_ammo.set_deferred("speed", speed)
-		new_ammo.set_deferred("global_position", global_position)
-		Global.findnode("AmmoContainer").call_deferred("add_child", new_ammo)
-		fire_rate = start_fire_rate
+	for child in get_children():
+		if child is Barrel:
+			barrels.append(child)
+
+func shoot():
+	firerate -= 1
+	if firerate <= 0:
+		for barrel in barrels:
+			barrel.shoot()
+			firerate = sfirerate

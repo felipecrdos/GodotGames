@@ -23,7 +23,7 @@
 [ext_resource path="res://assets/sprite/boss/rob_boss.png" type="Texture" id=21]
 [ext_resource path="res://assets/sprite/guns/mg_side.png" type="Texture" id=22]
 
-[sub_resource type="AnimatedTexture" id=5]
+[sub_resource type="AnimatedTexture" id=1]
 frames = 4
 frame_0/texture = ExtResource( 13 )
 frame_1/texture = ExtResource( 10 )
@@ -43,7 +43,7 @@ frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 15 )
 frame_3/delay_sec = 0.0
 
-[sub_resource type="AnimatedTexture" id=6]
+[sub_resource type="AnimatedTexture" id=3]
 frames = 4
 frame_0/texture = ExtResource( 20 )
 frame_1/texture = ExtResource( 19 )
@@ -85,6 +85,7 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="Label" type="Label" parent="HContainer/LeftScreen/VContainer/TopVContainer"]
+margin_top = 4.0
 margin_right = 78.0
 margin_bottom = 17.0
 custom_fonts/font = ExtResource( 12 )
@@ -96,7 +97,6 @@ valign = 1
 margin_top = 21.0
 margin_right = 78.0
 margin_bottom = 39.0
-size_flags_horizontal = 3
 alignment = 1
 
 [node name="Icon" type="TextureRect" parent="HContainer/LeftScreen/VContainer/TopVContainer/HContainer"]
@@ -104,6 +104,7 @@ margin_left = 30.0
 margin_right = 47.0
 margin_bottom = 18.0
 texture = ExtResource( 6 )
+stretch_mode = 4
 
 [node name="MidleVContainer" type="VBoxContainer" parent="HContainer/LeftScreen/VContainer"]
 margin_top = 47.0
@@ -194,7 +195,7 @@ alignment = 1
 margin_right = 16.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
-texture = SubResource( 5 )
+texture = SubResource( 1 )
 stretch_mode = 4
 
 [node name="X" type="Label" parent="HContainer/LeftScreen/VContainer/BottVContainer/Crystals/GreenCrystal"]
@@ -274,7 +275,7 @@ alignment = 1
 margin_right = 16.0
 margin_bottom = 21.0
 size_flags_horizontal = 3
-texture = SubResource( 6 )
+texture = SubResource( 3 )
 stretch_mode = 4
 
 [node name="X" type="Label" parent="HContainer/LeftScreen/VContainer/BottVContainer/Crystals/BlueCrystal"]
