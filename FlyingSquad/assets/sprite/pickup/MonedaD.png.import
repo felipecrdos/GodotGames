@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spr_coin_gri.png-51e3c93bf106f46cc9b3b48ce433d7b4.stex"
+path="res://.import/MonedaD.png-639c272cc7efa4fb55b57129fbee6933.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprite/items/spr_coin_gri.png"
-dest_files=[ "res://.import/spr_coin_gri.png-51e3c93bf106f46cc9b3b48ce433d7b4.stex" ]
+source_file="res://assets/sprite/pickup/MonedaD.png"
+dest_files=[ "res://.import/MonedaD.png-639c272cc7efa4fb55b57129fbee6933.stex" ]
 
 [params]
 

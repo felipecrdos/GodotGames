@@ -7,19 +7,19 @@
 [ext_resource path="res://scripts/interface/Pause.gd" type="Script" id=5]
 [ext_resource path="res://assets/sprite/player/player_icon.png" type="Texture" id=6]
 [ext_resource path="res://assets/sprite/player/player_health.png" type="Texture" id=7]
-[ext_resource path="res://assets/sprite/items/spr_coin_ama_00.png" type="Texture" id=8]
-[ext_resource path="res://assets/sprite/items/spr_coin_green_02.png" type="Texture" id=9]
-[ext_resource path="res://assets/sprite/items/spr_coin_green_01.png" type="Texture" id=10]
-[ext_resource path="res://assets/sprite/items/spr_coin_green_03.png" type="Texture" id=11]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_ama_00.png" type="Texture" id=8]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_green_02.png" type="Texture" id=9]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_green_01.png" type="Texture" id=10]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_green_03.png" type="Texture" id=11]
 [ext_resource path="res://resources/fontx16.tres" type="DynamicFont" id=12]
-[ext_resource path="res://assets/sprite/items/spr_coin_green_00.png" type="Texture" id=13]
-[ext_resource path="res://assets/sprite/items/spr_coin_ama_02.png" type="Texture" id=14]
-[ext_resource path="res://assets/sprite/items/spr_coin_ama_03.png" type="Texture" id=15]
-[ext_resource path="res://assets/sprite/items/spr_coin_ama_01.png" type="Texture" id=16]
-[ext_resource path="res://assets/sprite/items/spr_coin_azu_02.png" type="Texture" id=17]
-[ext_resource path="res://assets/sprite/items/spr_coin_azu_03.png" type="Texture" id=18]
-[ext_resource path="res://assets/sprite/items/spr_coin_azu_01.png" type="Texture" id=19]
-[ext_resource path="res://assets/sprite/items/spr_coin_azu_00.png" type="Texture" id=20]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_green_00.png" type="Texture" id=13]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_ama_02.png" type="Texture" id=14]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_ama_03.png" type="Texture" id=15]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_ama_01.png" type="Texture" id=16]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_azu_02.png" type="Texture" id=17]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_azu_03.png" type="Texture" id=18]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_azu_01.png" type="Texture" id=19]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_azu_00.png" type="Texture" id=20]
 [ext_resource path="res://assets/sprite/boss/rob_boss.png" type="Texture" id=21]
 [ext_resource path="res://assets/sprite/weapon/mg_side.png" type="Texture" id=22]
 
@@ -136,7 +136,6 @@ margin_right = 78.0
 margin_bottom = 43.0
 size_flags_vertical = 3
 custom_constants/separation = -2
-alignment = 1
 
 [node name="Label01" type="TextureRect" parent="HContainer/LeftScreen/Viewport/VContainer/MidleVContainer/HContainer"]
 margin_right = 21.0

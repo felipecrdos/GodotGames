@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://assets/sprite/items/spr_coin_strip4.png" type="Texture" id=1]
-[ext_resource path="res://scripts/items/Crystal.gd" type="Script" id=2]
+[ext_resource path="res://assets/sprite/pickup/spr_coin_strip4.png" type="Texture" id=1]
+[ext_resource path="res://scripts/pickup/Crystal.gd" type="Script" id=2]
+[ext_resource path="res://scenes/effect/CrystalParticles.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -35,12 +36,13 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
+particle = ExtResource( 3 )
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="ASprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
-frame = 3
+frame = 1
 playing = true
-[connection signal="body_entered" from="." to="." method="on_crystal_body_entered"]
+[connection signal="body_entered" from="." to="." method="on_pickup_body_entered"]

@@ -57,7 +57,6 @@ func update_powerup(value : int):
 	player_data["powerup"] = clamp(	player_data["powerup"], 
 									0, player_data["maxpowerup"])
 									
-	powerup.text = str(player_data["powerup"])
 	weapon.texture = load(player_data["weapon"][player_data["powerup"]])
 	
 func load_level():
