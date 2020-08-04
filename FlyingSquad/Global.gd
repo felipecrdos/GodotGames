@@ -6,9 +6,15 @@ var player
 var game_path = "user://game_data.json"
 var game_data = {	
 					"Player":{	"name":"Player", 
-								"health":10, 
-								"powerup":0, 
-								"Score":0
+								"health":4,
+								"maxhealth":4, 
+								"powerup":0,
+								"maxpowerup":4, 
+								"crystal":0,
+								"weapon":["res://assets/sprite/weapon/mg_side.png",
+										  "res://assets/sprite/weapon/matter_side.png",
+										  "res://assets/sprite/weapon/laser_side.png",
+										  "res://assets/sprite/weapon/rocket_side.png"]
 							},
 					"Level":{	"path":"res://scenes/levels/Level.tscn",
 								"name":"Level", 

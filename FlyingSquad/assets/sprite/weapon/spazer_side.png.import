@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spazer_side.png-63a5bb5c577ec3d396c0f4bde5a92763.stex"
+path="res://.import/spazer_side.png-55a9a193f539e557d32b1e96566de59e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprite/guns/spazer_side.png"
-dest_files=[ "res://.import/spazer_side.png-63a5bb5c577ec3d396c0f4bde5a92763.stex" ]
+source_file="res://assets/sprite/weapon/spazer_side.png"
+dest_files=[ "res://.import/spazer_side.png-55a9a193f539e557d32b1e96566de59e.stex" ]
 
 [params]
 

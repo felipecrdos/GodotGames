@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/rocket_side.png-04efd78eba4d5c73fedd1647c123d2fa.stex"
+path="res://.import/laser_side.png-3c0921ab5191c64e07e07a01a308a3ca.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprite/guns/rocket_side.png"
-dest_files=[ "res://.import/rocket_side.png-04efd78eba4d5c73fedd1647c123d2fa.stex" ]
+source_file="res://assets/sprite/weapon/laser_side.png"
+dest_files=[ "res://.import/laser_side.png-3c0921ab5191c64e07e07a01a308a3ca.stex" ]
 
 [params]
 

@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Player
 
 enum State {IDLE, FLY, HURT, DIE}
 enum Func {INPUT, HMOVE, VMOVE, MOVE}
@@ -14,6 +15,7 @@ var velocity 	: Vector2
 var direction   : Vector2
 var speed    	: Vector2
 var screen_size : Vector2
+var data		: Dictionary
 
 func _ready():
 	funcs_names = [	"idle_state", "fly_state", 
@@ -39,6 +41,7 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	
 	Global.player = self
+	data = Global.game_data["Player"]
 
 func _physics_process(delta):
 	if funcs_mask[state][Func.INPUT]:
@@ -81,6 +84,7 @@ func set_limits():
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 
+	
 func idle_state(delta):
 	$ASprite.play("idle")
 	

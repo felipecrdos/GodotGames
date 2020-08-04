@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/flamethrower_side.png-2fb36f04bb91a213565faf3de62ecc8a.stex"
+path="res://.import/cannon_side.png-4b36b2909bd3ebfae8df49174cc46183.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprite/guns/flamethrower_side.png"
-dest_files=[ "res://.import/flamethrower_side.png-2fb36f04bb91a213565faf3de62ecc8a.stex" ]
+source_file="res://assets/sprite/weapon/cannon_side.png"
+dest_files=[ "res://.import/cannon_side.png-4b36b2909bd3ebfae8df49174cc46183.stex" ]
 
 [params]
 

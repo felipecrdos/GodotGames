@@ -4,19 +4,64 @@ var lviewport
 var mviewport
 var rviewport
 
+var healths
+var crystal
+var weapon
+var powerup
+
 var game_data
+var player_data
+var level_data
+
 var level
 
 func _ready():
+	add_to_group("world")
+	
 	lviewport = $HContainer/LeftScreen/Viewport
 	mviewport = $HContainer/MidleScreen/Viewport
 	rviewport = $HContainer/RightScreen/Viewport
 	
+	healths = $HContainer/LeftScreen/Viewport/VContainer/MidleVContainer/HContainer
+	crystal = $HContainer/LeftScreen/Viewport/VContainer/BottVContainer/Crystals/GreenCrystal/Label
+	weapon = $HContainer/LeftScreen/Viewport/VContainer/BottVContainer/Powerup/HContainer/Icon
+	powerup = $HContainer/LeftScreen/Viewport/VContainer/BottVContainer/Powerup/Label
+	
 	game_data = Global.game_data
+	player_data = game_data["Player"]
+	level_data = game_data["Level"]
+	
+	update_health(0)
+	update_crystal(0)
+	update_powerup(0)
 	change_level()
 	
+func update_health(value : int):
+	player_data["health"] += value
+	player_data["health"] = clamp(	player_data["health"], 
+									0, player_data["maxhealth"])
+
+	for t in healths.get_children():
+		t.visible = false
+		
+	for h in player_data["health"]:
+		var t = healths.get_child(h)
+		t.visible = true
+
+func update_crystal(value : int):
+	player_data["crystal"] += value
+	crystal.text = str(player_data["crystal"])
+
+func update_powerup(value : int):
+	player_data["powerup"] += value
+	player_data["powerup"] = clamp(	player_data["powerup"], 
+									0, player_data["maxpowerup"])
+									
+	powerup.text = str(player_data["powerup"])
+	weapon.texture = load(player_data["weapon"][player_data["powerup"]])
+	
 func load_level():
-	var path = game_data["Level"]["path"]
+	var path = level_data["path"]
 	level = load(path).instance()
 	
 func change_level():

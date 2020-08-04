@@ -2,6 +2,7 @@ extends Position2D
 class_name Barrel
 
 export (PackedScene) var ammo
+
 func shoot():
 	var new = ammo.instance()
 	new.set_deferred("global_position", global_position)
