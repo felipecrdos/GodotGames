@@ -3,6 +3,7 @@ class_name Crystal
 
 func _ready():
 	speed = Vector2(10, 10)
+	value = "5"
 
 func _physics_process(delta):
 	if Global.player:
@@ -15,6 +16,6 @@ func on_pickup_body_entered(body):
 	destroy()
 
 func destroy():
-	Global.create_popup(popup, position, str(5), Color.chartreuse)
+	Global.create_popup(popup, position, value, Color.chartreuse)
 	Global.create_particle(particle, position, Color.chartreuse)
 	queue_free()

@@ -4,6 +4,8 @@ class_name Pickup
 var velocity : Vector2
 var direction: Vector2
 var speed	 : Vector2
+var value : String
+
 export (PackedScene) var particle
 export (PackedScene) var popup
 
