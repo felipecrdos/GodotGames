@@ -47,4 +47,13 @@ position = Vector2( 156.843, 161.515 )
 position = Vector2( 149.502, 36.0407 )
 
 [node name="Powerup" parent="PickupContainer" instance=ExtResource( 8 )]
-position = Vector2( 94.7734, 12.681 )
+position = Vector2( 115.987, -63.6866 )
+
+[node name="Powerup2" parent="PickupContainer" instance=ExtResource( 8 )]
+position = Vector2( 131.543, -38.2307 )
+
+[node name="Powerup3" parent="PickupContainer" instance=ExtResource( 8 )]
+position = Vector2( 154.878, -46.0089 )
+
+[node name="Powerup4" parent="PickupContainer" instance=ExtResource( 8 )]
+position = Vector2( 142.857, -67.9292 )

@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/pickup/Crystal.gd"
 }, {
+"base": "Weapon",
+"class": "LaserGun",
+"language": "GDScript",
+"path": "res://scripts/weapon/LaserGun.gd"
+}, {
 "base": "Node2D",
 "class": "Level",
 "language": "GDScript",
@@ -33,6 +38,11 @@ _global_script_classes=[ {
 "class": "MachineGun",
 "language": "GDScript",
 "path": "res://scripts/weapon/MachineGun.gd"
+}, {
+"base": "Weapon",
+"class": "MatterGun",
+"language": "GDScript",
+"path": "res://scripts/weapon/MatterGun.gd"
 }, {
 "base": "Area2D",
 "class": "Pickup",
@@ -49,6 +59,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/pickup/Powerup.gd"
 }, {
+"base": "Weapon",
+"class": "RocketGun",
+"language": "GDScript",
+"path": "res://scripts/weapon/RocketGun.gd"
+}, {
 "base": "Node2D",
 "class": "Weapon",
 "language": "GDScript",
@@ -58,11 +73,14 @@ _global_script_class_icons={
 "Ammo": "",
 "Barrel": "",
 "Crystal": "",
+"LaserGun": "",
 "Level": "",
 "MachineGun": "",
+"MatterGun": "",
 "Pickup": "",
 "Player": "",
 "Powerup": "",
+"RocketGun": "",
 "Weapon": ""
 }
 

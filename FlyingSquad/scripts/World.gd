@@ -52,12 +52,14 @@ func update_crystal(value : int):
 	player_data["crystal"] += value
 	crystal.text = str(player_data["crystal"])
 
-func update_powerup(value : int):
+func update_powerup(value : int, body=null):
 	player_data["powerup"] += value
 	player_data["powerup"] = clamp(	player_data["powerup"], 
-									0, player_data["maxpowerup"])
+									0, player_data["maxpowerup"]-1)
 									
 	weapon.texture = load(player_data["weapon"][player_data["powerup"]])
+	if body:
+		body.update_weapon()
 	
 func load_level():
 	var path = level_data["path"]

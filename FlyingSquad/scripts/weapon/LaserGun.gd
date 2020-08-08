@@ -1,6 +1,5 @@
 extends Weapon
-class_name MachineGun
+class_name LaserGun
 
 func _ready():
 	pass
-

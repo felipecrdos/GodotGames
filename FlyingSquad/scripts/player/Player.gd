@@ -8,14 +8,13 @@ var funcs_names	: Array
 var funcs_refs 	: Array
 var funcs_mask 	: Dictionary
 var weapons		: Array
-var weapon_index: int
 var state
 
 var velocity 	: Vector2
 var direction   : Vector2
 var speed    	: Vector2
 var screen_size : Vector2
-var data		: Dictionary
+var player_data	: Dictionary
 
 func _ready():
 	funcs_names = [	"idle_state", "fly_state", 
@@ -28,21 +27,18 @@ func _ready():
 					
 	for n in funcs_names:
 		funcs_refs.append(funcref(self, n))
-	
-	for child in get_children():
-		if child is Weapon:
-			weapons.append(child)
-
+		
 	state = State.FLY
-	weapon_index = 0
 	velocity = Vector2.ZERO
 	direction= Vector2.ZERO
 	speed	 = Vector2(100, 100)
 	screen_size = get_viewport_rect().size
 	
 	Global.player = self
-	data = Global.game_data["Player"]
-
+	player_data = Global.game_data["Player"]
+	weapons = $Weapon.get_children()
+	update_weapon()
+	
 func _physics_process(delta):
 	if funcs_mask[state][Func.INPUT]:
 		input()
@@ -66,7 +62,7 @@ func input():
 	if Input.is_action_pressed("ui_up"):
 		direction.y = -1
 	if Input.is_action_pressed("ui_accept"):
-		weapons[weapon_index].shoot()
+		weapons[player_data["powerup"]].shoot()
 
 	if Input.is_key_pressed(KEY_1):
 		Global.findnode("MCamera").shake(10, 60)
@@ -84,7 +80,11 @@ func set_limits():
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 
-	
+func update_weapon():
+	for weapon in weapons:
+		weapon.visible = false
+	weapons[player_data["powerup"]].visible = true
+
 func idle_state(delta):
 	$ASprite.play("idle")
 	
