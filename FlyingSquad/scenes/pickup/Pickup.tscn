@@ -14,4 +14,8 @@ popup = ExtResource( 2 )
 shape = SubResource( 1 )
 
 [node name="ASprite" type="AnimatedSprite" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
 [connection signal="body_entered" from="." to="." method="on_pickup_body_entered"]

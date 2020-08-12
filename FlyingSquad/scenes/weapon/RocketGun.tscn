@@ -12,7 +12,7 @@ __meta__ = {
 [node name="OLeftBarrel" parent="." instance=ExtResource( 2 )]
 position = Vector2( -5, -10 )
 rotation = 3.14159
-firerate = 10.0
+firerate = 20.0
 
 [node name="LeftBarrel" parent="." instance=ExtResource( 2 )]
 position = Vector2( -5, -10 )
@@ -32,4 +32,4 @@ rotation = -1.13446
 
 [node name="ORightBarrel" parent="." instance=ExtResource( 2 )]
 position = Vector2( 5, -10 )
-firerate = 10.0
+firerate = 20.0

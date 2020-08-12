@@ -65,4 +65,15 @@ func create_popup(packed : PackedScene, position : Vector2, text : String, color
 	popup.set_deferred("position", position)
 	popup.set_deferred("text", text)
 	popup.set_deferred("color", color)
-	
+
+func create_crystal(packed : PackedScene, position : Vector2):
+	var crystal = packed.instance()
+	Global.findnode("PickupContainer").call_deferred("add_child", crystal)
+	crystal.set_deferred("position", position)
+
+func create_explosion(packed : PackedScene, position : Vector2, anim : String, scale : Vector2):
+	var explosion = packed.instance()
+	Global.findnode("EffectContainer").call_deferred("add_child", explosion)
+	explosion.set_deferred("position", position)
+	explosion.set_deferred("scale", scale)
+	explosion.call_deferred("play", anim)

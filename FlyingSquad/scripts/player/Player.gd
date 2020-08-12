@@ -80,6 +80,12 @@ func set_limits():
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 
+func update_health():
+	if player_data["health"] > 0:
+		state = State.HURT
+	elif player_data["health"] <= 0:
+		state = State.DIE
+	
 func update_weapon():
 	for weapon in weapons:
 		weapon.visible = false
@@ -96,6 +102,8 @@ func hurt_state(delta):
 	
 func die_state(delta):
 	$ASprite.play("die")
+	yield($ASprite, "animation_finished")
+	queue_free()
 	
 func on_timer_timeout():
 	pass

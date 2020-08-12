@@ -36,17 +36,18 @@ func _ready():
 	update_powerup(0)
 	change_level()
 	
-func update_health(value : int):
+func update_health(value : int, body=null):
 	player_data["health"] += value
 	player_data["health"] = clamp(	player_data["health"], 
 									0, player_data["maxhealth"])
-
 	for t in healths.get_children():
 		t.visible = false
 		
 	for h in player_data["health"]:
 		var t = healths.get_child(h)
 		t.visible = true
+	if body:
+		body.update_health()
 
 func update_crystal(value : int):
 	player_data["crystal"] += value
