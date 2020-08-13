@@ -3,8 +3,7 @@ class_name Crystal
 
 var target : Vector2
 func _ready():
-	randomize()
-	var tx = rand_range(position.x - 40, position.x + 40)
+	var tx = rand_range(position.x, position.x + 200)
 	var ty = rand_range(position.y - 40, position.y - 80)
 	target = Vector2(tx, ty)
 	speed = Vector2(10, 10)
